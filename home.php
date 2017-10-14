@@ -11,16 +11,17 @@
     </head>
 <body>
     <?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
-    <?php include ("$root/_includes/nav.php"); ?>
+    <?php include ("_includes/nav.php"); ?>
     <br>
     <img id = "imageboy" src="images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
     <br>
 
     <!--Get and display user location -->
 
-    <div id="rectangle2">
+    <div id="rectangle">
         <p></p>
         <h2>Our Story</h2>
+        <div id ="aboutus">
         <p>
             The goal of FishVT is to raise awareness of the fantastic fishing opportunities that Vermont has to offer.
             In Vermont, fishing is mostly overshadowed by the state's more popular sports, such as skiing or hiking.
@@ -30,7 +31,7 @@
             options available to them, FishVT has created an accessible, easy-to-use, and highly customizable web site
             where fishing enthusiasts can locate the best fishing holes nearby.
         </p>
-
+        </div>
    </div>
 </body>
 

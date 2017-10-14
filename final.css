@@ -158,3 +158,8 @@
             #fishleft {
                 text-align: left;
             }
+            
+            aboutus p {
+                font-size: 4;
+                text-indent: 80%
+            }
