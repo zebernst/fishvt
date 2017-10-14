@@ -29,8 +29,8 @@ def deg_to_rad(deg):
 has_user_location = False
 if len(sys.argv) == 3:
 	has_user_location = True
-	user_lat = sys.argv[1]
-	user_lon = sys.argv[2]
+	user_lat = float(sys.argv[1])
+	user_lon = float(sys.argv[2])
 
 # fetch data
 r = requests.get('https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_TOURISM_SP_NOCACHE_v2/MapServer/163/query?where=1%3D1&outFields=*&outSR=4326&f=json')
@@ -41,8 +41,8 @@ data = r.json()['features']
 for entry in data:
 	# add distnace to user
 	if has_user_location:
-		feature_lat = entry['geometry'].get('y')
-		feature_lon = entry['geometry'].get('x')
+		feature_lat = float(entry['geometry'].get('y'))
+		feature_lon = float(entry['geometry'].get('x'))
 		dist_km = calculate_distance(feature_lat, feature_lon, user_lat, user_lon)
 		dist_deg = math.sqrt(math.pow(user_lat - feature_lat, 2) + math.pow(user_lon - feature_lon, 2)) # distance formula
 		# print("dist:", dist)
