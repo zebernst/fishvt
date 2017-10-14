@@ -37,9 +37,11 @@
         <p>We are four sophomores currently enrolled at the University of Vermont.</p>
         <img id = "boys" src="images/death.jpg" alt="That Gang's All Here">
         <h3>Useful Links</h3>
-        <a href="http://www.vtfishandwildlife.com/licenses_and_lotteries/license_center">Vermont License Center</a>
-        <a href="http://phish.com/">Phish</a>
-        <a href="http://www.vtfishandwildlife.com/">Vermont Fish and Wildlife</a>
+        <table><tr>
+        <th><a href="http://www.vtfishandwildlife.com/licenses_and_lotteries/license_center">Vermont License Center</a></th>
+        <th><a href="http://phish.com/">Phish</a></th>
+        <th><a href="http://www.vtfishandwildlife.com/">Vermont Fish and Wildlife</a></th>
+      </tr></table>
    </div>
    <?php include("footer.php"); ?>
 </body>
