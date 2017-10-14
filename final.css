@@ -1,6 +1,6 @@
             h1, h2, h3 {
                 text-align: center;
-                font-family: sans-serif;
+                font-family: "Rockwell", serif;
                 color: darkslategray;
             }
 
@@ -21,7 +21,17 @@
                 width: 100%;
                 margin: auto;
                 /*background-image: url("images/animated-fish-gif-3.gif");*/
-                background-color: #FF3366;
+                background-color: #5CE6E9;
+            }
+
+            .header img {
+              float: left;
+
+            }
+
+            .header h1 {
+              position: relative;
+              float: left;
             }
 
             .centered {
@@ -39,7 +49,7 @@
             }
 
             #nav li a{
-              font-family:Arial;
+              font-family:"Times New Roman", serif;
               text-decoration: none;
               float: left;
               padding: 10px;
@@ -51,7 +61,7 @@
             }
 
             #nav li a:hover{
-              background-color: #9B1C26;
+              background-color: #14C6C6;
               padding-bottom: 12px;
               border-bottom: 2px;
               border-bottom-color: #000000;

@@ -1,13 +1,14 @@
 <!-- ######################     Main Navigation   ############################## -->
+<div class="header">
+  <img src="/images/fish.png" alt="FishyBoi" height="100">
+  <h1 class="white" id="name">Fish Vermont</h1>
 
-<h1 class="white" id="name">Fish Vermont</h1>
-    <p class="white"><STRONG>Find some Fish.</STRONG></p>
-
+</div>
 
 <nav id='nav'>
-  <a href="index_copy.php"><img src="/images/fish.png" alt="FishyBoi" height="100"></a>
+
     <article class="welcome">
-    <p class="tagLine">Let's get Fishy</p>
+    
     </article>
     <ol>
         <?php
@@ -16,7 +17,7 @@
             print ' activePage ';
         }
         print '">';
-        print '<a href="index.php">Home</a>';
+        print '<a href="home.php">Home</a>';
         print '</li>';
 
         print '<li class="';
