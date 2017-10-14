@@ -3,54 +3,85 @@
                 font-family: sans-serif;
                 color: darkslategray;
             }
-            
+
             h1 {
                 font-size: 3em;
                 margin-bottom: -10px;
             }
-            
+
             h2 {
                 font-size: 2em;
             }
-            
+
             h3 {
                 font-size: 1.2em;
             }
-            
+
             body {
                 width: 100%;
                 margin: auto;
-                background-color: #b8dd96;
+                /*background-image: url("images/animated-fish-gif-3.gif");*/
+                background-color: #FF3366;
             }
-            
+
             .centered {
                 text-align: center;
             }
-            
+
+            /* code for horizontal menu*/
+
+            #nav{
+              padding:0;
+            }
+
+            #nav li{
+              display: inline-block;
+            }
+
+            #nav li a{
+              font-family:Arial;
+              text-decoration: none;
+              float: left;
+              padding: 10px;
+              background-color: #333333;
+              color:#ffffff;
+              border-bottom-color: #000000;
+              border-bottom-style: solid;
+
+            }
+
+            #nav li a:hover{
+              background-color: #9B1C26;
+              padding-bottom: 12px;
+              border-bottom: 2px;
+              border-bottom-color: #000000;
+              border-bottom-style: solid;
+              margin: -1px;
+            }
+
             #profile {
                 padding-top: 80px;
                 margin-bottom: -20px;
             }
-            
+
             #rounded {
                 width: 200px;
                 border-radius: 10em;
             }
-            
+
             #name {
                 margin-bottom: -10px;
             }
 
-            
+
             .white {
                 color: white;
             }
-            
-            
+
+
             p, a {
                 color: darkslategray;
                 text-align: center;
                 font-family: sans-serif;
                 font-size: .9em;
             }
-            
