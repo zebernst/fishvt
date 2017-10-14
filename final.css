@@ -135,7 +135,7 @@
             #mapRectangle {
                 padding-top: 15px;
                 width: 100%;
-                height: 820px;
+                height: 1000px;
                 background: #eaeaea;
                 margin-top: 10px;
                 padding-bottom: 10px;
@@ -209,4 +209,8 @@
             aboutus p {
                 font-size: 4;
                 text-indent: 80%
+            }
+
+            #mapid {
+              width = 100%;
             }
