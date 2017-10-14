@@ -45,6 +45,13 @@
 
             }
 
+            #abt {
+              text-align: center;
+              padding-top: 200px;
+              padding-left: 100px;
+              padding-right: 100px;
+            }
+
             /* code for horizontal menu*/
 
             #nav{

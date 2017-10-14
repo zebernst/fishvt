@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 
-<?php 
+<?php
 $fishList = array("Bowfin", "Carp", "ChannelCatfish", "WhiteCrappie", "LongnoseGar", "Muskellunge", "WhitePerch", "AmericanShad", "Sheepshead",
-        "LakeWhitefish", "BrookTrout", "BrownTrout", "RainbowTrout", "LakeTrout", "LandlockedSalmon", "RainbowSmelt", 
-        "YellowPerch", "Walleye", "NorthernPike", "ChainPickeral", "LargemouthBass", "SmallmouthBass", "Bullhead", 
+        "LakeWhitefish", "BrookTrout", "BrownTrout", "RainbowTrout", "LakeTrout", "LandlockedSalmon", "RainbowSmelt",
+        "YellowPerch", "Walleye", "NorthernPike", "ChainPickeral", "LargemouthBass", "SmallmouthBass", "Bullhead",
         "Panfish", "BlackCrappie", "Burbot");
 
 $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappie", "chkLongnoseGar", "chkMuskellunge", "chkWhitePerch",
@@ -23,53 +23,53 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
 
-    <body>   
+    <body>
     <?php include ("nav.php"); ?>
     <br><br>
-    
+
     <!--Get and display user location -->
-    
+
     <div id="rectangle">
-        
+
         <!-- PROMPT USER FOR SOME FISH -->
-        <form action="<?php print $phpSelf; ?>" id="frmRegister" method = "post"> 
+        <form action="<?php print $phpSelf; ?>" id="frmRegister" method = "post">
             <fieldset class="checkbox contact">
                 <legend>Fish: Check all that apply</legend>
-                
-                <?php 
-                for($x = 0; $x < count($fishList); $x++) {  
-                     
+
+                <?php
+                for($x = 0; $x < count($fishList); $x++) {
+
                     echo "<label><input
                             id='" . $fishChoice[$x] . "'
-                            name='" . $fishChoice[$x] . "' 
+                            name='" . $fishChoice[$x] . "'
                             type='checkbox'
                             value='" . $fishList[$x] . "'>" . $fishList[$x] . "</label> ";
-            } 
-            
+            }
+
             ?>
-           
+
             </fieldset>
-            
+
             <!--BUTTONS AND WIRES-->
              <fieldset class ="buttons">
                 <legend></legend>
                 <input class="button" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Register" >
             </fieldset> <!-- Ends Buttons -->
         </form>
-        
-        <p>You selected: <?php 
-        
+
+        <p>You selected: <?php
+
         for($x = 0; $x <= count($fishChoice); $x++) {
-        echo $_POST[$fishChoice[$x]]; 
+        echo $_POST[$fishChoice[$x]];
         echo " ";
         }
-        
+
         ?>
-        
+
         </p>
-        
-        
-        
+
+
+
    </div>
 </body>
 </html>

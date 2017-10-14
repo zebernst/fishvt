@@ -16,7 +16,7 @@
 
 
 
-    <?php include "$root/_includes/nav.php";?>
+    <?php include "$root/nav.php";?>
 
 
     <!--Get and display user location -->
