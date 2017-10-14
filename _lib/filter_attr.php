@@ -1,5 +1,5 @@
 <?php
-function filter_attr(array $data, string $attribute, $value) {
+function filter_attr(array $data, $attribute, $value) {
 	// print "<pre>";
 	// print_r($data);
 	// print "</pre>";
