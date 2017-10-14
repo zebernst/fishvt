@@ -207,7 +207,20 @@ $parkingValue = "";
                     }
                 }
                 
-                 
+                foreach ($binaryChoice as $x){
+                    if($_POST[$x] != ""){
+                        echo $_POST[$x];
+                        if($_POST[$x]=="Boats Allowed"){
+                            $list_of_lists[] = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
+                        }
+                        else if($_POST[$x]=="Dock Available"){
+                            $list_of_lists[] = filter_attr($data, "Dock", TRUE);
+                        }
+                        else if($_POST[$x]=="Winter Plowing"){
+                            $list_of_lists[] = filter_attr($data, "WinterPlowing", TRUE);
+                        }
+                    }
+                }
                 
                 ?>
 
