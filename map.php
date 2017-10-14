@@ -154,7 +154,7 @@ $parkingValue = "";
 
             </form>
 
-            <p>You selected: <?php
+            <h3>You selected:</h3><p> <br><?php
                 /*                 * for ($x = 0; $x <= count($fishChoice); $x++) {
                   echo $_POST[$fishChoice[$x]];
                   echo " ";
@@ -190,6 +190,7 @@ $parkingValue = "";
                 for($x = 0; $x<count($fishChoice); $x++){
                     if($_POST[$fishChoice[$x]] != ""){
                         echo $_POST[$fishChoice[$x]];
+                        print "<br>";
                         $name = str_replace(' ', '', $fishList[$x]);
                         $fishArray = filter_attr($data, $name, $_POST[$x]);
                         $fishIds = array();
@@ -205,6 +206,7 @@ $parkingValue = "";
                 foreach ($trafficChoice as $x) {
                     if($_POST[$x] != ""){
                         echo $_POST[$x];
+                        print "<br>";
                         $name = str_replace('mm', 'm', $_POST[$x]);
                         // echo $name;
                         $trafficArray = filter_attr($data, "UseVolume", $_POST[$x]);
@@ -220,6 +222,7 @@ $parkingValue = "";
                 foreach ($parkingChoice as $x) {
                     if($_POST[$x] != ""){
                         echo $_POST[$x];
+                        print "<br>";
                         $parkingArray = filter_attr($data, "Parking", $_POST[$x]);
                         $parkingIds = array();
                         foreach ($parkingArray as $loc) {
@@ -233,7 +236,7 @@ $parkingValue = "";
                 foreach ($binaryChoice as $x){
                     if($_POST[$x] != ""){
                         echo $_POST[$x];
-                        
+                        print "<br>";
                         if($_POST[$x]=="Boats Allowed"){
                             $boatsArray = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
                             $boatsIds = array();
