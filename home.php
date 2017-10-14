@@ -10,18 +10,18 @@
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
 
-    <body>   
-    <?php include ("nav.php"); ?>
+    <body>
+    <?php include ("_includes/nav.php"); ?>
     <br><br>
-    
+
     <!--Get and display user location -->
-    
+
     <div id="rectangle">
-        
+
     <p id="demo"></p>
-    <?php include ("geolocation.php");?> 
+    <?php include ("geolocation.php");?>
     <button onclick="getLocation()" class="centered">Find my location</button>
-    
+
    </div>
 </body>
 </html>

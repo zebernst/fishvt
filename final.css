@@ -51,12 +51,12 @@
             #nav li a{
               font-family:"Times New Roman", serif;
               text-decoration: none;
-              float: left;
+            /*  float: right;*/
               padding: 10px;
-              background-color: #333333;
+              /*background-color: #333333;*/
               color:#ffffff;
-              border-bottom-color: #000000;
-              border-bottom-style: solid;
+              /*border-bottom-color: #000000;
+              border-bottom-style: solid;*/
 
             }
 
