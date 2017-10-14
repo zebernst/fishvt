@@ -174,7 +174,7 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
         ?>
 
         </p>
-
+        <pre><?php print_r($_POST); ?></pre>
 
 
 
