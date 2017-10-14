@@ -23,6 +23,7 @@ $trafficChoice = array("chkLight", "chkMediumm", "chkHeavy");
 $parkingList = array("Small", "Medium", "Large");
 $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
 $parkingValue = "";
+$boolSubmitted = FALSE;
 ?>
 
 <HTML lang="en">
@@ -150,83 +151,92 @@ $parkingValue = "";
                 </fieldset> <!--Ends Buttons-->
 
             </form>
+            <?php
+            //if(boolSubmitted){
+                print "<p id='rectangle'>Your search for locations with<br>";
+                    /*                 * for ($x = 0; $x <= count($fishChoice); $x++) {
+                      echo $_POST[$fishChoice[$x]];
+                      echo " ";
+                      }
 
-            <p>You selected: <?php
-                /*                 * for ($x = 0; $x <= count($fishChoice); $x++) {
-                  echo $_POST[$fishChoice[$x]];
-                  echo " ";
-                  }
+                      echo "<br>";
 
-                  echo "<br>";
+                      for ($x = 0; $x <= count($binaryChoice); $x++) {
+                      echo $_POST[$binaryChoice[$x]];
+                      echo " ";
+                      }
+                      echo "<br>";
 
-                  for ($x = 0; $x <= count($binaryChoice); $x++) {
-                  echo $_POST[$binaryChoice[$x]];
-                  echo " ";
-                  }
-                  echo "<br>";
+                      for ($x = 0; $x < count($trafficChoice); $x++) {
+                      echo $_POST[$trafficChoice[$x]];
+                      echo " ";
+                      }
 
-                  for ($x = 0; $x < count($trafficChoice); $x++) {
-                  echo $_POST[$trafficChoice[$x]];
-                  echo " ";
-                  }
+                      echo "<br>";
 
-                  echo "<br>";
+                      for ($x = 0; $x < count($parkingChoice); $x++) {
+                      echo $_POST[$parkingChoice[$x]];
+                      echo " ";
+                      }* */
+                    include "$root/_lib/filter_attr.php";
+                    include "$root/_includes/getdata.php";
 
-                  for ($x = 0; $x < count($parkingChoice); $x++) {
-                  echo $_POST[$parkingChoice[$x]];
-                  echo " ";
-                  }* */
-                include "$root/_lib/filter_attr.php";
-                include "$root/_includes/getdata.php";
+                    $list_of_lists = array();
 
-                $list_of_lists = array();
+                    $list_of_lists[] = $data;
 
-                $list_of_lists[] = $data;
-                
-                for($x = 0; $x<count($fishChoice); $x++){
-                    if($_POST[$fishChoice[$x]] != ""){
-                        //echo $_POST[$fishChoice[$x]];
-                        $name = str_replace(' ', '', $fishList[$x]);
-                        $list_of_lists[] = filter_attr($data, $name, $_POST[$x]);
-                    }
-                }
-                
-                foreach ($trafficChoice as $x) {
-                    if($_POST[$x] != ""){
-                        //echo $_POST[$x];
-                        $name = str_replace('mm', 'm', $_POST[$x]);
-                        //echo $name;
-                        $list_of_lists[] = filter_attr($data, "UseVolume", $name);
-                    }
-                }
-                
-                foreach ($parkingChoice as $x) {
-                    if($_POST[$x] != ""){
-                        //echo $_POST[$x];
-                        $list_of_lists[] = filter_attr($data, "Parking", $_POST[$x]);
-                    }
-                }
-                
-                foreach ($binaryChoice as $x){
-                    if($_POST[$x] != ""){
-                        echo $_POST[$x];
-                        if($_POST[$x]=="Boats Allowed"){
-                            $list_of_lists[] = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
-                        }
-                        else if($_POST[$x]=="Dock Available"){
-                            $list_of_lists[] = filter_attr($data, "Dock", TRUE);
-                        }
-                        else if($_POST[$x]=="Winter Plowing"){
-                            $list_of_lists[] = filter_attr($data, "WinterPlowing", TRUE);
+                    for($x = 0; $x<count($fishChoice); $x++){
+                        if($_POST[$fishChoice[$x]] != ""){
+                            echo $_POST[$fishChoice[$x]];
+                            print "<br>";
+                            $name = str_replace(' ', '', $fishList[$x]);
+                            $list_of_lists[] = filter_attr($data, $name, $_POST[$x]);
                         }
                     }
-                }
-                
-                ?>
 
-            </p>
-            <pre><?php print_r($_POST);
-                ?>
+                    foreach ($trafficChoice as $x) {
+                        if($_POST[$x] != ""){
+                            echo $_POST[$x];
+                            print "<br>";
+                            $name = str_replace('mm', 'm', $_POST[$x]);
+                            //echo $name;
+                            $list_of_lists[] = filter_attr($data, "UseVolume", $name);
+                        }
+                    }
+
+                    foreach ($parkingChoice as $x) {
+                        if($_POST[$x] != ""){
+                            echo $_POST[$x];
+                            print "<br>";
+                            $list_of_lists[] = filter_attr($data, "Parking", $_POST[$x]);
+                        }
+                    }
+
+                    foreach ($binaryChoice as $x){
+                        if($_POST[$x] != ""){
+                            echo $_POST[$x];
+                            print "<br>";
+                            if($_POST[$x]=="Boats Allowed"){
+                                $list_of_lists[] = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
+                            }
+                            else if($_POST[$x]=="Dock Available"){
+                                $list_of_lists[] = filter_attr($data, "Dock", TRUE);
+                            }
+                            else if($_POST[$x]=="Winter Plowing"){
+                                $list_of_lists[] = filter_attr($data, "WinterPlowing", TRUE);
+                            }
+                        }
+                    }
+
+
+                    print "</p>";
+            //}
+                    ?>
+                
+                <pre><?php
+                //print_r($_POST);
+                //print_r($data);
+                    ?>
             </pre>
         </div>
     </body>
