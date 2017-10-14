@@ -151,12 +151,27 @@
               color: #000000;
             }
 
+            #rectangle a {
+              padding-left: 130px;
+              padding-right: 130px;
+            }
+
             fieldset {
                 border: none;
             }
 
+            #rectangle p{
+              font-size: 1.2em;
+              margin-left: 50px;
+              margin-right: 50px;
+            }
+
             #imageboy {
                 width: 100%;
+            }
+
+            #boys {
+              width: 90%;
             }
 
             #logosLogo {
