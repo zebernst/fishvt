@@ -1,16 +1,20 @@
 <!DOCTYPE HTML>
 
 <?php 
-$fishList = array("Bowfin", "Carp", "ChannelCatfish", "WhiteCrappie", "LongnoseGar", "Muskellunge", "WhitePerch", "AmericanShad", "Sheepshead",
-        "LakeWhitefish", "BrookTrout", "BrownTrout", "RainbowTrout", "LakeTrout", "LandlockedSalmon", "RainbowSmelt", 
-        "YellowPerch", "Walleye", "NorthernPike", "ChainPickeral", "LargemouthBass", "SmallmouthBass", "Bullhead", 
-        "Panfish", "BlackCrappie", "Burbot");
+$fishList = array("Bowfin", "Carp", "Channel Catfish", "White Crappie", "Longnose Gar", "Muskellunge", "White Perch", "American Shad", "Sheepshead",
+        "Lake Whitefish", "Brook Trout", "Brown Trout", "Rainbow Trout", "Lake Trout", "Landlocked Salmon", "Rainbow Smelt", 
+        "Yellow Perch", "Walleye", "Northern Pike", "Chain Pickeral", "Largemouth Bass", "Smallmouth Bass", "Bullhead", 
+        "Panfish", "Black Crappie", "Burbot");
 
 $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappie", "chkLongnoseGar", "chkMuskellunge", "chkWhitePerch",
                     "chkAmericanShad", "chkSheepshead", "chkLakeWhitefish", "chkBrookTrout", "chkBrownTrout", "chkRainbowTrout",
                     "chkLakeTrout", "chkLandlockedSalmon", "chkRainbowSmelt", "chkYellowPerch", "chkWalleye", "chkNorthernPike",
                     "chkChainPickeral", "chkLargemouthBass", "chkSmallmouthBass", "chkBullhead", "chkPanfish", "chkBlackCrappie",
                     "chkBurbot");
+
+$binaryList = array("Boats Allowed", "Dock Available", "Winter Plowing");
+$binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
+
 ?>
 
 <HTML lang="en">
@@ -35,11 +39,11 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
         <!-- PROMPT USER FOR SOME FISH -->
         <form action="<?php print $phpSelf; ?>" id="frmRegister" method = "post"> 
             <fieldset class="checkbox contact">
-                <legend>Fish: Check all that apply</legend>
+                <legend>Fish: Check all that apply, or select none to search all sites</legend>
                 <table style = "width: 100%">
                 <?php 
                 for($x = 0; $x < count($fishList); $x++) {  
-                    if($x % 5 == 0) { echo "<tr>";}
+                    if($x % 4 == 0) { echo "<tr>";}
                     echo "<th>";
                     echo "<label><input
                             id='" . $fishChoice[$x] . "'
@@ -47,8 +51,28 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
                             type='checkbox'
                             value='" . $fishList[$x] . "'>" . $fishList[$x] . "</label> ";
                     echo "</th>";
-                    if($x % 5 == 5) { echo "</tr>";}
+                    if($x % 4 == 4) { echo "</tr>";}
             } 
+            
+            ?>
+                </table>
+            </fieldset>
+            
+            <fieldset class="checkbox contact">
+                <legend>Options: Check all that apply</legend>
+                <table style = "width: 100%">
+                <?php 
+                for($x = 0; $x < count($binaryList); $x++) {  
+                    if($x == 0) { echo "<tr>";}
+                    echo "<th>";
+                    echo "<label><input
+                            id='" . $binaryChoice[$x] . "'
+                            name='" . $binaryChoice[$x] . "' 
+                            type='checkbox'
+                            value='" . $binaryList[$x] . "'>" . $binaryList[$x] . "</label> ";
+                    echo "</th>";
+            } 
+            echo "</tr>";
             
             ?>
                 </table>
@@ -58,17 +82,24 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
             <p id="demo"></p>
             <?php include ("geolocation.php");?>
             
-            <!--BUTTONS AND WIRES-->
+            <!--BUTTONS AND WIRES -->
              <fieldset class ="buttons">
                 <legend></legend>
                 <input class="button" onclick="getLocation()" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Register" >
-            </fieldset> <!-- Ends Buttons -->
+            </fieldset> <!--Ends Buttons-->
         </form>
         
         <p>You selected: <?php 
         
         for($x = 0; $x <= count($fishChoice); $x++) {
         echo $_POST[$fishChoice[$x]]; 
+        echo " ";
+        }
+        
+        echo "<br>";
+        
+        for($x = 0; $x <= count($binaryChoice); $x++) {
+        echo $_POST[$binaryChoice[$x]]; 
         echo " ";
         }
         
