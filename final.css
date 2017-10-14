@@ -122,7 +122,7 @@
                 font-size: .9em;
             }
 
-            
+
             #rectangle {
                 padding-top: 15px;
                 width: 100%;
@@ -130,7 +130,7 @@
                 background: #eaeaea;
                 margin-top: 10px;
             }
-            
+
             #rectangle2 {
                 margin-top: 10px;
                 width: 100%;
@@ -138,27 +138,37 @@
                 background: lightblue;
                 padding-bottom: 10px;
             }
-            
+
             fieldset {
                 border: none;
             }
-            
+
             #imageboy {
                 width: 100%;
             }
-            
+
+            #logosLogo {
+              display: inline-block;
+              width: 50%;
+            }
+
+            #hackLogo {
+              display: inline-block;
+              width: 30%;
+            }
+
             legend {
                 text-align: center;
             }
-            
+
             button {
                  margin: 0 auto;
             }
-            
+
             #fishleft {
                 text-align: left;
             }
-            
+
             aboutus p {
                 font-size: 4;
                 text-indent: 80%
