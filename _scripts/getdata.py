@@ -55,6 +55,8 @@ for entry in data:
 			entry['attributes'][key]=False
 		elif value == 'Yes':
 			entry['attributes'][key]=True
+		elif value == 'N/A':
+			entry['attributes'][key]=None
 
 
 # pprint(data)
