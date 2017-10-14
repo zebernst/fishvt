@@ -13,7 +13,7 @@
         print '<a href="map.php">Map</a>';
         print '</li>';
 
-        print '<li class = "';
+        print '<li class ="';
         if ($path_parts['filename'] == "home") {
             print ' activePage ';
         }
@@ -23,6 +23,6 @@
 
         ?>
     </ol>
-    
+
 </nav>
 </div>

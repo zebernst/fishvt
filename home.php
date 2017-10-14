@@ -31,7 +31,17 @@
             options available to them, FishVT has created an accessible, easy-to-use, and highly customizable web site
             where fishing enthusiasts can locate the best fishing holes nearby.
         </p>
+
         </div>
+        <h2>About Us</h2>
+        <p>We are four sophomores currently enrolled at the University of Vermont.</p>
+        <img id = "boys" src="images/death.jpg" alt="That Gang's All Here">
+        <h3>Useful Links</h3>
+        <table><tr>
+        <th><a href="http://www.vtfishandwildlife.com/licenses_and_lotteries/license_center">Vermont License Center</a></th>
+        <th><a href="http://phish.com/">Phish</a></th>
+        <th><a href="http://www.vtfishandwildlife.com/">Vermont Fish and Wildlife</a></th>
+      </tr></table>
    </div>
    <?php include("footer.php"); ?>
 </body>
