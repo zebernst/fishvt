@@ -23,7 +23,6 @@
 
         ?>
     </ol>
+    <?php include("footer.php"); ?>
 </nav>
 </div>
-
-
