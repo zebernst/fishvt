@@ -1,8 +1,75 @@
-<?php
+<!DOCTYPE HTML>
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+<?php 
+$fishList = array("Bowfin", "Carp", "ChannelCatfish", "WhiteCrappie", "LongnoseGar", "Muskellunge", "WhitePerch", "AmericanShad", "Sheepshead",
+        "LakeWhitefish", "BrookTrout", "BrownTrout", "RainbowTrout", "LakeTrout", "LandlockedSalmon", "RainbowSmelt", 
+        "YellowPerch", "Walleye", "NorthernPike", "ChainPickeral", "LargemouthBass", "SmallmouthBass", "Bullhead", 
+        "Panfish", "BlackCrappie", "Burbot");
 
+$fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappie", "chkLongnoseGar", "chkMuskellunge", "chkWhitePerch",
+                    "chkAmericanShad", "chkSheepshead", "chkLakeWhitefish", "chkBrookTrout", "chkBrownTrout", "chkRainbowTrout",
+                    "chkLakeTrout", "chkLandlockedSalmon", "chkRainbowSmelt", "chkYellowPerch", "chkWalleye", "chkNorthernPike",
+                    "chkChainPickeral", "chkLargemouthBass", "chkSmallmouthBass", "chkBullhead", "chkPanfish", "chkBlackCrappie",
+                    "chkBurbot");
+?>
+
+<HTML lang="en">
+    <head>
+        <title>Fish VT</title>
+        <meta charset="utf-8">
+        <meta name="author" content="UVM CS Crew">
+        <meta name="description" content="HackVT">
+        <link rel="icon" type="image/png" href="images/Pufferfish.png">
+        <link rel="stylesheet" href="final.css" type="text/css" media="screen">
+    </head>
+
+    <body>   
+    <?php include ("nav.php"); ?>
+    <br><br>
+    
+    <!--Get and display user location -->
+    
+    <div id="rectangle">
+        
+        <!-- PROMPT USER FOR SOME FISH -->
+        <form action="<?php print $phpSelf; ?>" id="frmRegister" method = "post"> 
+            <fieldset class="checkbox contact">
+                <legend>Fish: Check all that apply</legend>
+                
+                <?php 
+                for($x = 0; $x < count($fishList); $x++) {  
+                     
+                    echo "<label><input
+                            id='" . $fishChoice[$x] . "'
+                            name='" . $fishChoice[$x] . "' 
+                            type='checkbox'
+                            value='" . $fishList[$x] . "'>" . $fishList[$x] . "</label> ";
+            } 
+            
+            ?>
+           
+            </fieldset>
+            
+            <!--BUTTONS AND WIRES-->
+             <fieldset class ="buttons">
+                <legend></legend>
+                <input class="button" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Register" >
+            </fieldset> <!-- Ends Buttons -->
+        </form>
+        
+        <p>You selected: <?php 
+        
+        for($x = 0; $x <= count($fishChoice); $x++) {
+        echo $_POST[$fishChoice[$x]]; 
+        echo " ";
+        }
+        
+        ?>
+        
+        </p>
+        
+        
+        
+   </div>
+</body>
+</html>
