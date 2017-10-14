@@ -36,6 +36,14 @@ $parkingValue = "";
         <meta name="description" content="HackVT">
         <link rel="icon" type="image/png" href="images/Pufferfish.png">
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
+
+        <!-- leaflet.js -->
+        <link   rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+            integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+            crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+            integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+            crossorigin=""></script>
     </head>
 
     <body>
@@ -154,7 +162,7 @@ $parkingValue = "";
 
             </form>
 
-            <h3>You selected:</h3><p> <br><?php
+            <h3>You selected:</h3><p><?php
                 /*                 * for ($x = 0; $x <= count($fishChoice); $x++) {
                   echo $_POST[$fishChoice[$x]];
                   echo " ";
@@ -280,17 +288,59 @@ $parkingValue = "";
                     }
                 }
 
-                print "<pre>";
-                print_r($locations);
-                print "</pre>";
+                // print "<pre>";
+                // print_r($locations);
+                // print "</pre>";
                 
                
                 ?>
 
             </p>
-            <pre><?php print_r($_POST);
+            <div id="mapid" style="width: 100%; height: 800px;"></div>
+            <?php include "_private/mapboxapi.php"; ?>
+            <script>
+                var mymap = L.map('mapid').setView([44.0511, -72.9245], 7);
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">          CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                    accessToken: "<?php print $apiKey; ?>"
+                }).addTo(mymap);
+            
+                var placelist = [
+                <?php
+                    foreach ($locations as $location) {
+                        $waterBody = $location['attributes']['WaterBody'];
+                        $directions = $location['attributes']['Directions'];
+                        $info = "\"<strong>$waterBody</strong><br>$directions\"";
+                        $lat = $location['geometry']['y'];
+                        $lon = $location['geometry']['x'];
+                        print "[$info, $lat, $lon],\n";
+                    }
                 ?>
-            </pre>
+                ];
+            
+                var currentLocationIcon = L.icon({
+                    iconUrl: 'images/urhere.png',
+                
+                    iconSize:     [48, 48], // size of the icon
+                    iconAnchor:   [24, 48], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
+                });
+
+                marker = new L.marker([44.518087699999995, -73.18415689999999], {icon: currentLocationIcon})
+                    .bindPopup("<strong>Your current location</strong>")
+                    .addTo(mymap);
+            
+                for (var i = 0; i < placelist.length; i++) {
+                        marker = new L.marker([placelist[i][1],placelist[i][2]])
+                            .bindPopup(placelist[i][0])
+                            .addTo(mymap);
+                    }
+            
+            </script>
         </div>
+
+        <br>
     </body>
 </html>
