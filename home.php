@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<?php $root = realpath($_SERVER["DOCUMENT_ROOT"]); ?>
 <HTML lang="en">
 
     <head>
@@ -11,7 +12,7 @@
     </head>
 
     <body>   
-    <?php include ("nav.php"); ?>
+    <?php include "$root/_includes/nav.php"; ?>
     <br><br>
     
     <!--Get and display user location -->
@@ -19,7 +20,7 @@
     <div id="rectangle">
         
     <p id="demo"></p>
-    <?php include ("geolocation.php");?> 
+    <?php include "$root/_includes/geolocation.php";?> 
     <button onclick="getLocation()" class="centered">Find my location</button>
     
    </div>
