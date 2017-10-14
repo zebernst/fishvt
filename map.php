@@ -15,6 +15,12 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
 $binaryList = array("Boats Allowed", "Dock Available", "Winter Plowing");
 $binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
 
+$trafficList = array("Light", "Medium", "Heavy");
+$trafficChoice = array("chkLight", "chkMedium", "chkHeavy");
+
+$parkingList = array("Small", "Medium", "Large");
+$parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
+
 ?>
 
 <HTML lang="en">
@@ -77,8 +83,53 @@ $binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing")
             ?>
                 </table>
             </fieldset>
+<<<<<<< HEAD
 
 
+=======
+            
+            <fieldset class="checkbox contact">
+                <legend>Traffic: Check all that apply</legend>
+                <table style = "width: 100%">
+                <?php 
+                for($x = 0; $x < count($trafficList); $x++) {  
+                    if($x == 0) { echo "<tr>";}
+                    echo "<th>";
+                    echo "<label><input
+                            id='" . $trafficChoice[$x] . "'
+                            name='" . $trafficChoice[$x] . "' 
+                            type='checkbox'
+                            value='" . $trafficList[$x] . "'>" . $trafficList[$x] . "</label> ";
+                    echo "</th>";
+            } 
+            echo "</tr>";
+            
+            ?>
+                </table>
+            </fieldset>
+            
+            <fieldset class="checkbox contact">
+                <legend>Parking: Check all that apply</legend>
+                <table style = "width: 100%">
+                <?php 
+                for($x = 0; $x < count($parkingList); $x++) {  
+                    if($x == 0) { echo "<tr>";}
+                    echo "<th>";
+                    echo "<label><input
+                            id='" . $parkingChoice[$x] . "'
+                            name='" . $parkingChoice[$x] . "' 
+                            type='checkbox'
+                            value='" . $parkingList[$x] . "'>" . $parkingList[$x] . "</label> ";
+                    echo "</th>";
+            } 
+            echo "</tr>";
+            
+            ?>
+                </table>
+            </fieldset>
+            
+            
+>>>>>>> 9a6107241d62056a7d18ed30522761e7586fc9c0
             <p id="demo"></p>
             <?php include ("geolocation.php");?>
 
@@ -88,9 +139,15 @@ $binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing")
                 <input class="button" onclick="getLocation()" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Register" >
             </fieldset> <!--Ends Buttons-->
         </form>
+<<<<<<< HEAD
 
         <p>You selected: <?php
 
+=======
+        
+        <p>You selected: <br> <?php 
+        
+>>>>>>> 9a6107241d62056a7d18ed30522761e7586fc9c0
         for($x = 0; $x <= count($fishChoice); $x++) {
         echo $_POST[$fishChoice[$x]];
         echo " ";
@@ -102,7 +159,25 @@ $binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing")
         echo $_POST[$binaryChoice[$x]];
         echo " ";
         }
+<<<<<<< HEAD
 
+=======
+        
+        echo "<br>";
+        
+        for($x = 0; $x <= count($trafficChoice); $x++) {
+        echo $_POST[$trafficChoice[$x]]; 
+        echo " ";
+        }
+        
+        echo "<br>";
+        
+        for($x = 0; $x <= count($parkingChoice); $x++) {
+        echo $_POST[$parkingChoice[$x]]; 
+        echo " ";
+        }
+        
+>>>>>>> 9a6107241d62056a7d18ed30522761e7586fc9c0
         ?>
 
         </p>
