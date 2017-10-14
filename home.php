@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-<?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
 <HTML lang="en">
 
     <head>
@@ -10,15 +9,28 @@
         <link rel="icon" type="image/png" href="images/Pufferfish.png">
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
+<body>
+    <?php include ("nav.php"); ?>
+    <br>
+    <img id = "imageboy" src="images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
+    <br>
 
-<div id="bodBlock">
-    <body>
+    <!--Get and display user location -->
 
+    <div id="rectangle2">
+        <p></p>
+        <h2>Our Story</h2>
+        <p>
+            The goal of FishVT is to raise awareness of the fantastic fishing opportunities that Vermont has to offer.
+            In Vermont, fishing is mostly overshadowed by the state's more popular sports, such as skiing or hiking.
+            But Vermont is home to over 90 species of fish, from common game fish like bass and trout to more exotic
+            catches like the Longnose Gar or the Bowfin. </p>
+        <p> In order to let visitors and residents alike know about the
+            options available to them, FishVT has created an accessible, easy-to-use, and highly customizable web site
+            where fishing enthusiasts can locate the best fishing holes nearby.
+        </p>
 
-    
-    <?php include "$root/nav.php";?>
-
-
+   </div>
 </body>
-</div>
+</body>
 </html>

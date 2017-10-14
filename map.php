@@ -35,22 +35,24 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
 
     <body>
     <?php include ("nav.php"); ?>
-    <br><br>
+    <br>
+    <img id = "imageboy" src="images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
+    <br>
 
     <!--Get and display user location -->
 
-    <div id="chkbx">
-
+    <div id="rectangle">
 
         <!-- PROMPT USER FOR SOME FISH -->
         <form action="<?php print $phpSelf; ?>" id="frmRegister" method = "post">
             <fieldset class="checkbox contact">
                 <legend>Fish: Check all that apply, or select none to search all sites</legend>
+                <br>
                 <table style = "width: 100%">
                 <?php
                 for($x = 0; $x < count($fishList); $x++) {
                     if($x % 4 == 0) { echo "<tr>";}
-                    echo "<th>";
+                    echo "<th id = 'fishleft'>";
                     echo "<label><input
                             id='" . $fishChoice[$x] . "'
                             name='" . $fishChoice[$x] . "'
@@ -63,29 +65,10 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
             ?>
                 </table>
             </fieldset>
-
-            <fieldset class="checkbox contact">
-                <legend>Options: Check all that apply</legend>
-                <table style = "width: 100%">
-                <?php
-                for($x = 0; $x < count($binaryList); $x++) {
-                    if($x == 0) { echo "<tr>";}
-                    echo "<th>";
-                    echo "<label><input
-                            id='" . $binaryChoice[$x] . "'
-                            name='" . $binaryChoice[$x] . "'
-                            type='checkbox'
-                            value='" . $binaryList[$x] . "'>" . $binaryList[$x] . "</label> ";
-                    echo "</th>";
-            }
-            echo "</tr>";
-
-            ?>
-                </table>
-            </fieldset>
-
+            <hr>
             <fieldset class="checkbox contact">
                 <legend>Traffic: Check all that apply</legend>
+                 <br>
                 <table style = "width: 100%">
                 <?php
                 for($x = 0; $x < count($trafficList); $x++) {
@@ -103,9 +86,10 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
             ?>
                 </table>
             </fieldset>
-
+            <hr>
             <fieldset class="checkbox contact">
                 <legend>Parking: Check all that apply</legend>
+                 <br>
                 <table style = "width: 100%">
                 <?php
                 for($x = 0; $x < count($parkingList); $x++) {
@@ -123,15 +107,40 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
             ?>
                 </table>
             </fieldset>
+            <hr>
+            <fieldset class="checkbox contact">
+                <legend>Conditions: Check all that apply</legend>
+                 <br>
+                <table style = "width: 100%">
+                <?php
+                for($x = 0; $x < count($binaryList); $x++) {
+                    if($x == 0) { echo "<tr>";}
+                    echo "<th>";
+                    echo "<label><input
+                            id='" . $binaryChoice[$x] . "'
+                            name='" . $binaryChoice[$x] . "'
+                            type='checkbox'
+                            value='" . $binaryList[$x] . "'>" . $binaryList[$x] . "</label> ";
+                    echo "</th>";
+            }
+            echo "</tr>";
 
+            ?>
+                </table>
+            </fieldset>
+            
+            
+            
+            
             <p id="demo"></p>
             <?php include ("geolocation.php");?>
-
+            <hr>
             <!--BUTTONS AND WIRES -->
              <fieldset class ="buttons">
                 <legend></legend>
                 <input class="button" onclick="getLocation()" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Submit" >
             </fieldset> <!--Ends Buttons-->
+
         </form>
 
         <p>You selected: <?php
@@ -167,7 +176,6 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
 
 
 
-
-   </div>
+        </div>
 </body>
 </html>

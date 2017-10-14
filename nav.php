@@ -1,5 +1,6 @@
 <!-- ######################     Main Navigation   ############################## -->
 
+<div id="rectangle2">
 <nav id='nav'>
   <?php include ("header.php"); ?>
     <article class="welcome">
@@ -15,14 +16,6 @@
         print '<a href="map.php">Map</a>';
         print '</li>';
 
-        print '<li class="';
-        if ($path_parts['filename'] == "about") {
-            print ' activePage ';
-        }
-        print '">';
-        print '<a href="about.php">About</a>';
-        print '</li>';
-
         print '<li class = "';
         if ($path_parts['filename'] == "home") {
             print ' activePage ';
@@ -34,3 +27,6 @@
         ?>
     </ol>
 </nav>
+</div>
+
+

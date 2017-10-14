@@ -12,11 +12,13 @@
 
     <body>
     <?php include ("nav.php"); ?>
-    <br><br>
+    <br>
+    <img id = "imageboy" src="images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
+    <br>
 
     <!--Get and display user location -->
 
-    <div id="abt">
+    <div id="rectangle2">
 
         <p>
             The goal of FishVT is to raise awareness of the fantastic fishing opportunities that Vermont has to offer.
