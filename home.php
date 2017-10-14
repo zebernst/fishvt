@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
 <?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
-<<<<<<< HEAD
-
-=======
->>>>>>> ff69713daa844ade7e3a0ad61d7688156807c1c0
 <HTML lang="en">
 
     <head>
@@ -16,7 +12,10 @@
     </head>
 
 
-    <body background="images/river.gif" id="bg">
+    <body>
+
+
+
     <?php include "$root/_includes/nav.php";?>
 
 
@@ -29,5 +28,7 @@
     <button onclick="getLocation()" class="centered">Find my location</button>
 
    </div>
+
 </body>
+
 </html>
