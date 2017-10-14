@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
 
-
+<div id="bodBlock">
     <body>
 
 
@@ -30,5 +30,5 @@
    </div>
 
 </body>
-
+</div>
 </html>
