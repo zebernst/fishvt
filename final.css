@@ -53,8 +53,9 @@
             }
 
             fieldset {
-              border-color: #88F3F3;
+              border-color: #1B4545;
               border-radius: 1em;
+              padding-bottom: 20px;
             }
 
             table {
