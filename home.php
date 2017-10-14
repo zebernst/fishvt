@@ -1,6 +1,9 @@
 <!DOCTYPE HTML>
 <?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ff69713daa844ade7e3a0ad61d7688156807c1c0
 <HTML lang="en">
 
     <head>
