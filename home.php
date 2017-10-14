@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<?php $root = realpath($_SERVER["DOCUMENT_ROOT"]); ?>
+<?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
 <HTML lang="en">
 
     <head>
