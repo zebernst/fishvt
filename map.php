@@ -189,7 +189,7 @@ $parkingValue = "";
                 
                 for($x = 0; $x<count($fishChoice); $x++){
                     if($_POST[$fishChoice[$x]] != ""){
-                        //echo $_POST[$fishChoice[$x]];
+                        echo $_POST[$fishChoice[$x]];
                         $name = str_replace(' ', '', $fishList[$x]);
                         $fishArray = filter_attr($data, $name, $_POST[$x]);
                         $fishIds = array();
@@ -219,7 +219,7 @@ $parkingValue = "";
 
                 foreach ($parkingChoice as $x) {
                     if($_POST[$x] != ""){
-                        //echo $_POST[$x];
+                        echo $_POST[$x];
                         $parkingArray = filter_attr($data, "Parking", $_POST[$x]);
                         $parkingIds = array();
                         foreach ($parkingArray as $loc) {
@@ -232,7 +232,7 @@ $parkingValue = "";
 
                 foreach ($binaryChoice as $x){
                     if($_POST[$x] != ""){
-                        // echo $_POST[$x];
+                        echo $_POST[$x];
                         
                         if($_POST[$x]=="Boats Allowed"){
                             $boatsArray = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
