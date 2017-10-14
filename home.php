@@ -13,12 +13,7 @@
 
 <div id="bodBlock">
     <body>
-
-
-    
     <?php include "$root/nav.php";?>
-
-
 </body>
 </div>
 </html>
