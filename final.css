@@ -139,6 +139,18 @@
                 padding-bottom: 10px;
             }
 
+            #rectangle3 {
+                margin-top: 10px;
+                width: 100%;
+                height: 300px;
+                background: #555555;
+                padding-top: 10px;
+            }
+
+            #rectangle3 p {
+              color: #000000;
+            }
+
             fieldset {
                 border: none;
             }
@@ -154,6 +166,8 @@
 
             #hackLogo {
               display: inline-block;
+              padding-right: 120px;
+              padding-left: 60px;
               width: 30%;
             }
 
