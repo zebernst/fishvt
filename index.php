@@ -1,16 +1,20 @@
 <?php
+// debug
+$debug = false;
+if (isset($_GET['debug'])) {
+	$debug = true;
+}
 
-print "test";
 
-$cmd = escapeshellcmd('python ./getdata.py');
-$output = shell_exec($cmd);
 
-print "<pre>$output</pre>";
-
+// fetch data
+$output = shell_exec(escapeshellcmd('python ./getdata.py'));
 $data = json_decode($output);
 
-print "<pre>";
-print_r($data);
-print "</pre>";
-
+// print data array
+if ($debug) {
+	print "<pre>";
+	print_r($data);
+	print "</pre>";
+}
 ?>
