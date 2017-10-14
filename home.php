@@ -13,8 +13,8 @@
     </head>
 
 
-    <body>
-    <?php include "$root/_includes/nav.php"; ?>
+    <body background="images/river.gif" id="bg">
+    <?php include "$root/_includes/nav.php";?>
 
 
     <!--Get and display user location -->

@@ -22,6 +22,7 @@
                 margin: auto;
                 /*background-image: url("images/animated-fish-gif-3.gif");*/
                 background-color: #5CE6E9;
+
             }
 
             .header img {
@@ -40,21 +41,41 @@
                 text-align: center;
             }
 
+            .centerd button{
+
+            }
+
+            #bg {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              min-width:100%;
+              min-height: 100%;
+              background-size: cover;
+
+            }
+
             /* code for horizontal menu*/
 
             #nav{
               padding:0;
+              margin-right: 20px;
             }
 
             #nav li{
-              display: inline-block;
+              display: inline;
             }
 
             #nav li a{
               font-family:"Times New Roman", serif;
+              font-size: 1.3em;
               text-decoration: none;
-            /*  float: right;*/
-              padding: 10px;
+              float: right;
+              padding-top: 14px;
+              padding-left: 20px;
+              padding-right: 20px;
+              padding-bottom: 30px;
               /*background-color: #333333;*/
               color:#ffffff;
               /*border-bottom-color: #000000;
@@ -66,8 +87,8 @@
               background-color: #14C6C6;
               padding-bottom: 12px;
               border-bottom: 2px;
-              border-bottom-color: #000000;
-              border-bottom-style: solid;
+            /*  border-bottom-color: #000000;
+              border-bottom-style: solid; */
               margin: -1px;
             }
 
