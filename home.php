@@ -1,4 +1,6 @@
 <!DOCTYPE HTML>
+<?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
+
 <HTML lang="en">
 
     <head>
@@ -10,16 +12,17 @@
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
 
+
     <body>
-    <?php include ("_includes/nav.php"); ?>
-    <br><br>
+    <?php include "$root/_includes/nav.php"; ?>
+
 
     <!--Get and display user location -->
 
     <div id="rectangle">
 
     <p id="demo"></p>
-    <?php include ("geolocation.php");?>
+    <?php include "$root/_includes/geolocation.php";?>
     <button onclick="getLocation()" class="centered">Find my location</button>
 
    </div>
