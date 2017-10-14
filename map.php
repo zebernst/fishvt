@@ -43,7 +43,7 @@ $parkingValue = "";
 
         <!--Get and display user location -->
 
-        <div id="rectangle">
+        <div id="mapRectangle">
 
             <!-- PROMPT USER FOR SOME FISH -->
             <form action="<?php print $phpSelf; ?>" id="frmRegister" method = "post">
@@ -182,7 +182,7 @@ $parkingValue = "";
                 $list_of_lists = array();
 
                 $list_of_lists[] = $data;
-                
+
                 for($x = 0; $x<count($fishChoice); $x++){
                     if($_POST[$fishChoice[$x]] != ""){
                         //echo $_POST[$fishChoice[$x]];
@@ -190,7 +190,7 @@ $parkingValue = "";
                         $list_of_lists[] = filter_attr($data, $name, $_POST[$x]);
                     }
                 }
-                
+
                 foreach ($trafficChoice as $x) {
                     if($_POST[$x] != ""){
                         //echo $_POST[$x];
@@ -199,14 +199,14 @@ $parkingValue = "";
                         $list_of_lists[] = filter_attr($data, "UseVolume", $name);
                     }
                 }
-                
+
                 foreach ($parkingChoice as $x) {
                     if($_POST[$x] != ""){
                         //echo $_POST[$x];
                         $list_of_lists[] = filter_attr($data, "Parking", $_POST[$x]);
                     }
                 }
-                
+
                 foreach ($binaryChoice as $x){
                     if($_POST[$x] != ""){
                         echo $_POST[$x];
@@ -221,7 +221,7 @@ $parkingValue = "";
                         }
                     }
                 }
-                
+
                 ?>
 
             </p>
