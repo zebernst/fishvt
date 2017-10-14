@@ -1,6 +1,8 @@
 <!DOCTYPE HTML>
 
 <?php
+$root = $_SERVER["DOCUMENT_ROOT"];
+
 $fishList = array("Bowfin", "Carp", "Channel Catfish", "White Crappie", "Longnose Gar", "Muskellunge", "White Perch", "American Shad", "Sheepshead",
         "Lake Whitefish", "Brook Trout", "Brown Trout", "Rainbow Trout", "Lake Trout", "Landlocked Salmon", "Rainbow Smelt",
         "Yellow Perch", "Walleye", "Northern Pike", "Chain Pickeral", "Largemouth Bass", "Smallmouth Bass", "Bullhead",
@@ -34,7 +36,7 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
     </head>
 
     <body>
-    <?php include ("nav.php"); ?>
+    <?php include ("$root/_includes/nav.php"); ?>
     <br>
     <img id = "imageboy" src="images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
     <br>
@@ -133,7 +135,7 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
             
             
             <p id="demo"></p>
-            <?php include ("geolocation.php");?>
+            <?php include ("$root/_includes/geolocation.php");?>
             <hr>
             <!--BUTTONS AND WIRES -->
              <fieldset class ="buttons">

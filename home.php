@@ -10,7 +10,8 @@
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
 <body>
-    <?php include ("nav.php"); ?>
+    <?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
+    <?php include ("$root/_includes/nav.php"); ?>
     <br>
     <img id = "imageboy" src="images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
     <br>
