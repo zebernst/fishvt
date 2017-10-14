@@ -1,0 +1,56 @@
+            h1, h2, h3 {
+                text-align: center;
+                font-family: sans-serif;
+                color: darkslategray;
+            }
+            
+            h1 {
+                font-size: 3em;
+                margin-bottom: -10px;
+            }
+            
+            h2 {
+                font-size: 2em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+            
+            body {
+                width: 100%;
+                margin: auto;
+                background-color: #b8dd96;
+            }
+            
+            .centered {
+                text-align: center;
+            }
+            
+            #profile {
+                padding-top: 80px;
+                margin-bottom: -20px;
+            }
+            
+            #rounded {
+                width: 200px;
+                border-radius: 10em;
+            }
+            
+            #name {
+                margin-bottom: -10px;
+            }
+
+            
+            .white {
+                color: white;
+            }
+            
+            
+            p, a {
+                color: darkslategray;
+                text-align: center;
+                font-family: sans-serif;
+                font-size: .9em;
+            }
+            
