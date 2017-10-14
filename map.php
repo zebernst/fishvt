@@ -130,7 +130,7 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
             <!--BUTTONS AND WIRES -->
              <fieldset class ="buttons">
                 <legend></legend>
-                <input class="button" onclick="getLocation()" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Register" >
+                <input class="button" onclick="getLocation()" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Submit" >
             </fieldset> <!--Ends Buttons-->
         </form>
 
