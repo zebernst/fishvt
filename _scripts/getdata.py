@@ -32,9 +32,6 @@ if len(sys.argv) == 3:
 	user_lat = sys.argv[1]
 	user_lon = sys.argv[2]
 
-user_lat = 44.518087699999995
-user_lon = -73.18415689999999
-
 # fetch data
 r = requests.get('https://anrmaps.vermont.gov/arcgis/rest/services/Open_Data/OPENDATA_ANR_TOURISM_SP_NOCACHE_v2/MapServer/163/query?where=1%3D1&outFields=*&outSR=4326&f=json')
 data = r.json()['features']
