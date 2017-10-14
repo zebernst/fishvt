@@ -13,7 +13,7 @@
 <?php include '_lib/filter_attr.php';  ?>
 
 
-
+<!--
 <div id="mapid" style="width: 600px; height: 400px;"></div>
 <?php include "_private/mapboxapi.php"; ?>
 <script>
@@ -49,9 +49,24 @@
 		}
 
 </script>
-
+-->
 <?php
-// $yellowperch = filter_attr($data, "YellowPerch", true);
+$yellowperch = filter_attr($data, "YellowPerch", true);
+$sheepshead  = filter_attr($data, "Sheepshead",  true);
+
+
+$ids = array();
+
+
+
+
+print "<pre>";
+// print_r($yellowperch);
+print "</pre>";
+
+// $cmd = escapeshellcmd("python $root/_scripts/intersect.py " . escapeshellarg(json_encode($data)) . escapeshellarg(json_encode($yellowperch)));
+// print $cmd;
+
 
 print "<pre>";
 print '$data array:'."\n";

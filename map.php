@@ -18,8 +18,8 @@ $binaryList = array("Boats Allowed", "Dock Available", "Winter Plowing");
 
 $binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
 
-$trafficList = array("Light", "Medium", "Heavy");
-$trafficChoice = array("chkLight", "chkMediumm", "chkHeavy");
+$trafficList = array("Light", "Moderate", "Heavy", "Seasonal");
+$trafficChoice = array("chkLight", "chkModerate", "chkHeavy", "chkSeasonal");
 
 $parkingList = array("Small", "Medium", "Large");
 
@@ -185,48 +185,101 @@ $parkingValue = "";
                 $list_of_lists = array();
                 
                 $list_of_lists[] = $data;
+                $id_superlist = array();
                 
                 for($x = 0; $x<count($fishChoice); $x++){
                     if($_POST[$fishChoice[$x]] != ""){
                         //echo $_POST[$fishChoice[$x]];
                         $name = str_replace(' ', '', $fishList[$x]);
-                        $list_of_lists[] = filter_attr($data, $name, $_POST[$x]);
+                        $fishArray = filter_attr($data, $name, $_POST[$x]);
+                        $fishIds = array();
+                        foreach ($fishArray as $loc) {
+                            $id = $loc['attributes']['id'];
+                            $fishIds[] = $id;
+                        }
+                        $id_superlist[] = $fishIds;
                     }
                 }
-                
+            
+
                 foreach ($trafficChoice as $x) {
                     if($_POST[$x] != ""){
-                        //echo $_POST[$x];
+                        echo $_POST[$x];
                         $name = str_replace('mm', 'm', $_POST[$x]);
-                        //echo $name;
-                        $list_of_lists[] = filter_attr($data, "UseVolume", $name);
+                        // echo $name;
+                        $trafficArray = filter_attr($data, "UseVolume", $_POST[$x]);
+                        $trafficIds = array();
+                        foreach ($trafficArray as $loc) {
+                            $id = $loc['attributes']['id'];
+                            $trafficIds[] = $id;
+                        }
+                        $id_superlist[] = $trafficIds;
                     }
                 }
-                
+
                 foreach ($parkingChoice as $x) {
                     if($_POST[$x] != ""){
                         //echo $_POST[$x];
-                        $list_of_lists[] = filter_attr($data, "Parking", $_POST[$x]);
+                        $parkingArray = filter_attr($data, "Parking", $_POST[$x]);
+                        $parkingIds = array();
+                        foreach ($parkingArray as $loc) {
+                            $id = $loc['attributes']['id'];
+                            $parkingIds[] = $id;
+                        }
+                        $id_superlist[] = $parkingIds;
                     }
                 }
-                
+
                 foreach ($binaryChoice as $x){
                     if($_POST[$x] != ""){
-                        echo $_POST[$x];
+                        // echo $_POST[$x];
                         
                         if($_POST[$x]=="Boats Allowed"){
-                            $list_of_lists[] = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
+                            $boatsArray = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
+                            $boatsIds = array();
+                            foreach($boatsArray as $loc) {
+                                $id = $loc['attributes']['id'];
+                                $boatsIds[] = $id;
+                            }
+                            $id_superlist[] = $boatsIds;
                         }
                         else if($_POST[$x]=="Dock Available"){
-                            $list_of_lists[] = filter_attr($data, "Dock", TRUE);
+                            $dockArray = filter_attr($data, "Dock", TRUE);
+                            $dockIds = array();
+                            foreach($dockArray as $loc) {
+                                $id = $loc['attributes']['id'];
+                                $dockIds[] = $id;
+                            }
+                            $id_superlist[] = $dockIds;
                         }
                         else if($_POST[$x]=="Winter Plowing"){
-                            $list_of_lists[] = filter_attr($data, "WinterPlowing", TRUE);
+                            $winterArray = filter_attr($data, "WinterPlowing", TRUE);
+                            $winterIds = array();
+                            foreach($winterArray as $loc) {
+                                $id = $loc['attributes']['id'];
+                                $winterIds[] = $id;
+                            }
+                            $id_superlist[] = $winterIds;
                         }
                     }
                 }
                 
-                
+                $intersected = range(0,350);
+
+                foreach($id_superlist as $thisArray) {
+                    $intersected = array_intersect($intersected, $thisArray);
+                }
+
+                $locations = array();
+                foreach($data as $location) {
+                    if (in_array($location['attributes']['id'], $intersected)) {
+                        $locations[] = $location;
+                    }
+                }
+
+                print "<pre>";
+                print_r($locations);
+                print "</pre>";
                 
                
                 ?>
