@@ -15,6 +15,7 @@
     <img id = "imageboy" src="images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
     <br>
 
+<<<<<<< HEAD
     <!--Get and display user location -->
 
     <div id="rectangle2">
@@ -32,5 +33,10 @@
 
    </div>
 </body>
+=======
+<div id="bodBlock">
+    <body>
+    <?php include "$root/nav.php";?>
+>>>>>>> 2c2af7eddcb148e1579556a02e86236317882083
 </body>
 </html>

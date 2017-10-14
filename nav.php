@@ -3,9 +3,6 @@
 <div id="rectangle2">
 <nav id='nav'>
   <?php include ("header.php"); ?>
-    <article class="welcome">
-
-    </article>
     <ol>
         <?php
         print '<li class="';
