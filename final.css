@@ -52,6 +52,20 @@
               padding-right: 100px;
             }
 
+            fieldset {
+              border-color: #88F3F3;
+              border-radius: 1em;
+            }
+
+            table {
+              table-layout: fixed;
+              width: 100%;
+            }
+
+            #chkbx {
+              padding-top: 200px;
+            }
+
             /* code for horizontal menu*/
 
             #nav{
@@ -118,4 +132,3 @@
             th {
                 text-align: left;
             }
-            
