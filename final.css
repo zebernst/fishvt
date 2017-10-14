@@ -25,24 +25,25 @@
 
             }
 
-            .header img {
+            header img {
               float: left;
               padding-top: 50px;
               padding-right: 15px;
 
             }
 
-            .header h1 {
+            header h1 {
               position: relative;
               float: left;
+              border-top: 50px;
             }
 
             .centered {
                 text-align: center;
             }
 
-            .centerd button{
-
+            button{
+              margin: auto;
             }
 
             #abt {

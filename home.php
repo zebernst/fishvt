@@ -15,19 +15,9 @@
     <body>
 
 
-
+    
     <?php include "$root/nav.php";?>
 
-
-    <!--Get and display user location -->
-
-    <div id="rectangle">
-
-    <p id="demo"></p>
-    <?php include "$root/_includes/geolocation.php";?>
-    <button onclick="getLocation()" class="centered">Find my location</button>
-
-   </div>
 
 </body>
 </div>
