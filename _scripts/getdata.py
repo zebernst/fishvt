@@ -39,7 +39,7 @@ data = r.json()['features']
 
 # manipulate data
 for entry in data:
-	# add distnace to user
+	# add distance to user
 	if has_user_location:
 		feature_lat = float(entry['geometry'].get('y'))
 		feature_lon = float(entry['geometry'].get('x'))
