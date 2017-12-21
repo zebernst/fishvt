@@ -22,15 +22,13 @@ $host  = parse_url($domain, PHP_URL_HOST);   // get url hostname (i.e. zebernst.
 $netId = explode('.', $host)[0];               // extract netId from hostname
 $root  = $_SERVER['DOCUMENT_ROOT'];                    // contains filesystem folder (e.g. /users/z/e/zebernst/www-root)
 switch ($netId) {                                      // add root subdirectory based on which silk account it's running on
-    case "zebernst" : $root .= "/hackvt"; break;
-    default         : $root .= "/fishvt"; break;
+    case "zebernst" : $rootFolder = "/hackvt"; break;
+    default         : $rootFolder = "/fishvt"; break;
 }
+$root .= $rootFolder;
+
 
 // setup debug variable
 $debug = isset($_GET["debug"]) ? (!in_array(strtolower($_GET["debug"]), array("false", "f", "0")) ? true : false) : false;
-
-
-// %%%%%%%%%%%%%%%%
-// %%% includes %%%
-// %%%%%%%%%%%%%%%%
+?>
 

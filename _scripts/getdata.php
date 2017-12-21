@@ -35,11 +35,15 @@ function calculate_distance($lat1, $lon1, $lat2, $lon2) {
 }
 
 
-#  user location - todo: make this dynamic
-// currently hardcoded to green mountain power in colchester, vt
-$hasUserLocationData = true;
-$userLat = 44.518087699999995;
-$userLon = -73.18415689999999;
+#  user location
+$hasUserLocationData = !empty($_POST["currentPos"]);
+if ($hasUserLocationData) {
+    $posArray = json_decode($_POST["currentPos"], true);
+    $userLat  = $posArray["coords"][0];
+    $userLon  = $posArray["coords"][1];
+}
+// originally: green mountain power in colchester, vt @ (44.518087699999995 / -73.18415689999999)
+
 
 
 # get data
