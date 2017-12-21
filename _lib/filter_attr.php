@@ -1,9 +1,5 @@
 <?php
 function filter_attr(array $data, $attribute, $value) {
-	// print "<pre>";
-	// print_r($data);
-	// print "</pre>";
-
 	$filtered_locations = array();
 
 	foreach($data as $location) {

@@ -1,3 +1,4 @@
+<?php include "_includes/init.php"; ?>
 <!DOCTYPE HTML>
 <HTML lang="en">
 
@@ -10,8 +11,7 @@
         <link rel="stylesheet" href="final.css" type="text/css" media="screen">
     </head>
 <body>
-    <?php $root = $_SERVER["DOCUMENT_ROOT"]; ?>
-    <?php include ("_includes/nav.php"); ?>
+    <?php include "_includes/nav.php"; ?>
     <br>
     <img id = "imageboy" src="images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
     <br>

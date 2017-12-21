@@ -1,30 +1,30 @@
 <!DOCTYPE HTML>
+<?php include "_includes/init.php";
 
-<?php
-$root = $_SERVER["DOCUMENT_ROOT"];
 
-$fishList = array("Bowfin", "Carp", "Channel Catfish", "White Crappie", "Longnose Gar", "Muskellunge", "White Perch", "American Shad", "Sheepshead",
-    "Lake Whitefish", "Brook Trout", "Brown Trout", "Rainbow Trout", "Lake Trout", "Landlocked Salmon", "Rainbow Smelt",
-    "Yellow Perch", "Walleye", "Northern Pike", "Chain Pickeral", "Largemouth Bass", "Smallmouth Bass", "Bullhead",
-    "Panfish", "Black Crappie", "Burbot");
+// variable initializations
+$fishList       = array("Bowfin", "Carp", "Channel Catfish", "White Crappie", "Longnose Gar", "Muskellunge", "White Perch", "American Shad", "Sheepshead",
+                        "Lake Whitefish", "Brook Trout", "Brown Trout", "Rainbow Trout", "Lake Trout", "Landlocked Salmon", "Rainbow Smelt",
+                        "Yellow Perch", "Walleye", "Northern Pike", "Chain Pickeral", "Largemouth Bass", "Smallmouth Bass", "Bullhead",
+                        "Panfish", "Black Crappie", "Burbot");
 
-$fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappie", "chkLongnoseGar", "chkMuskellunge", "chkWhitePerch",
-    "chkAmericanShad", "chkSheepshead", "chkLakeWhitefish", "chkBrookTrout", "chkBrownTrout", "chkRainbowTrout",
-    "chkLakeTrout", "chkLandlockedSalmon", "chkRainbowSmelt", "chkYellowPerch", "chkWalleye", "chkNorthernPike",
-    "chkChainPickeral", "chkLargemouthBass", "chkSmallmouthBass", "chkBullhead", "chkPanfish", "chkBlackCrappie",
-    "chkBurbot");
+$fishChoice     = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappie", "chkLongnoseGar", "chkMuskellunge", "chkWhitePerch",
+                        "chkAmericanShad", "chkSheepshead", "chkLakeWhitefish", "chkBrookTrout", "chkBrownTrout", "chkRainbowTrout",
+                        "chkLakeTrout", "chkLandlockedSalmon", "chkRainbowSmelt", "chkYellowPerch", "chkWalleye", "chkNorthernPike",
+                        "chkChainPickeral", "chkLargemouthBass", "chkSmallmouthBass", "chkBullhead", "chkPanfish", "chkBlackCrappie",
+                        "chkBurbot");
 
-$binaryList = array("Boats Allowed", "Dock Available", "Winter Plowing");
+$binaryList     = array("Boats Allowed", "Dock Available", "Winter Plowing");
 
-$binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
+$binaryChoice   = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
 
-$trafficList = array("Light", "Moderate", "Heavy", "Seasonal");
-$trafficChoice = array("chkLight", "chkModerate", "chkHeavy", "chkSeasonal");
+$trafficList    = array("Light", "Moderate", "Heavy", "Seasonal");
+$trafficChoice  = array("chkLight", "chkModerate", "chkHeavy", "chkSeasonal");
 
-$parkingList = array("Small", "Medium", "Large");
+$parkingList    = array("Small", "Medium", "Large");
 
-$parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
-$parkingValue = "";
+$parkingChoice  = array("chkSmall", "chkMedium", "chkLarge");
+$parkingValue   = "";
 
 ?>
 
@@ -47,12 +47,12 @@ $parkingValue = "";
     </head>
 
     <body>
-        <?php include ("$root/_includes/nav.php"); ?>
+        <?php include "$root/_includes/nav.php"; ?>
         <br>
         <img id = "imageboy" src="images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
         <br>
 
-        <!--Get and display user location -->
+        <!-- todo: Get and display user location -->
 
         <div id="mapRectangle">
 
@@ -151,44 +151,25 @@ $parkingValue = "";
 
 
 
-                <p id="demo"></p>
+                <p id="user-coords"></p>
                 <?php include ("$root/_includes/geolocation.php"); ?>
                 <hr>
                 <!--BUTTONS AND WIRES -->
                 <fieldset class ="buttons">
                     <legend></legend>
+                    <input type="hidden" id="currentPos" name="currentPos" value="">
                     <input class="button" onclick="getLocation()" id="btnSubmit" name="btnSubmit" tabindex="900" type="submit" value="Submit" >
                 </fieldset> <!--Ends Buttons-->
 
             </form>
 
             <h3>You selected:</h3><p><?php
-                /*                 * for ($x = 0; $x <= count($fishChoice); $x++) {
-                  echo $_POST[$fishChoice[$x]];
-                  echo " ";
-                  }
-                 * 
-                  echo "<br>";
-                 * 
-                  for ($x = 0; $x <= count($binaryChoice); $x++) {
-                  echo $_POST[$binaryChoice[$x]];
-                  echo " ";
-                  }
-                  echo "<br>";
-                 * 
-                  for ($x = 0; $x < count($trafficChoice); $x++) {
-                  echo $_POST[$trafficChoice[$x]];
-                  echo " ";
-                  }
-                 * 
-                  echo "<br>";
-                 * 
-                  for ($x = 0; $x < count($parkingChoice); $x++) {
-                  echo $_POST[$parkingChoice[$x]];
-                  echo " ";
-                  }* */
                 include "$root/_lib/filter_attr.php";
-                include "$root/_includes/getdata.php";
+                include "$root/_scripts/getdata.php";
+
+                 print "<pre>";
+                 print_r($_POST);
+                 print "</pre>";
                 
                 $list_of_lists = array();
                 
@@ -288,9 +269,7 @@ $parkingValue = "";
                     }
                 }
 
-                // print "<pre>";
-                // print_r($locations);
-                // print "</pre>";
+
                 
                
                 ?>
@@ -299,15 +278,16 @@ $parkingValue = "";
             <div id="mapid" style="width: 100%; height: 800px;"></div>
             <?php include "_private/mapboxapi.php"; ?>
             <script>
+                // todo: make location dynamic
                 var mymap = L.map('mapid').setView([44.0511, -72.9245], 7);
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">          CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
                     maxZoom: 18,
                     id: 'mapbox.streets',
-                    accessToken: "<?php print $apiKey; ?>"
+                    accessToken: "<?php print $mapboxApiKey; ?>"
                 }).addTo(mymap);
             
-                var placelist = [
+                var placeList = [
                 <?php
                     foreach ($locations as $location) {
                         $waterBody = $location['attributes']['WaterBody'];
@@ -328,13 +308,14 @@ $parkingValue = "";
                     popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
                 });
 
-                marker = new L.marker([44.518087699999995, -73.18415689999999], {icon: currentLocationIcon})
+                // todo: make location dynamic
+                marker = new L.marker([44.476239, -73.196966], {icon: currentLocationIcon})
                     .bindPopup("<strong>Your current location</strong>")
                     .addTo(mymap);
             
-                for (var i = 0; i < placelist.length; i++) {
-                        marker = new L.marker([placelist[i][1],placelist[i][2]])
-                            .bindPopup(placelist[i][0])
+                for (var i = 0; i < placeList.length; i++) {
+                        marker = new L.marker([placeList[i][1],placeList[i][2]])
+                            .bindPopup(placeList[i][0])
                             .addTo(mymap);
                     }
             
