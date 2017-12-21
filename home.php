@@ -20,15 +20,13 @@
         <p></p>
         <h2>Our Story</h2>
         <div id="aboutus">
-        <p>
-            The goal of FishVT is to raise awareness of the fantastic fishing opportunities that Vermont has to offer.
-            In Vermont, fishing is mostly overshadowed by the state's more popular sports, such as skiing or hiking.
-            But Vermont is home to over 90 species of fish, from common game fish like bass and trout to more exotic
-            catches like the Longnose Gar or the Bowfin. </p>
-        <p> In order to let visitors and residents alike know about the
-            options available to them, FishVT has created an accessible, easy-to-use, and highly customizable web site
-            where fishing enthusiasts can locate the best fishing holes nearby.
-        </p>
+        <p>The goal of FishVT is to raise awareness of the fantastic fishing opportunities that Vermont has to offer.
+           In Vermont, fishing is mostly overshadowed by the state's more popular sports, such as skiing or hiking.
+           But Vermont is home to over 90 species of fish, from common game fish like bass and trout to more exotic
+           catches like the Longnose Gar or the Bowfin. </p>
+        <p>In order to let visitors and residents alike know about the
+           options available to them, FishVT has created an accessible, easy-to-use, and highly customizable web site
+           where fishing enthusiasts can locate the best fishing holes nearby.</p>
 
         </div>
         <h2>About Us</h2>

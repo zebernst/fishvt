@@ -15,14 +15,12 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
     "chkBurbot");
 
 $binaryList = array("Boats Allowed", "Dock Available", "Winter Plowing");
-
 $binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
 
 $trafficList   = array("Light", "Moderate", "Heavy", "Seasonal");
 $trafficChoice = array("chkLight", "chkModerate", "chkHeavy", "chkSeasonal");
 
 $parkingList = array("Small", "Medium", "Large");
-
 $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
 $parkingValue  = "";
 
@@ -51,7 +49,7 @@ $parkingValue  = "";
     <body>
         <?php include "$root/_includes/nav.php"; ?>
         <br>
-        <img id="imageboy" src="_images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
+        <img id="imageboy" src="<?php print $rootFolder; ?>/_images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
         <br>
         <div id="mapRectangle">
 
@@ -139,120 +137,156 @@ $parkingValue  = "";
 
             </form>
 
-            <?php
-            if (!isset($_POST["btnSubmit"])) {
-                print "<p>Press submit to view a map of fishing spots!</p>";
-                print "<!--"; // comment out map if form has not been submitted
-            }
-            ?>
+            <?php if (!isset($_POST["btnSubmit"])) print "<p>Press submit to view a map of fishing spots!</p><!--"; // comment out map if form has not been submitted ?>
             <h3>You selected:</h3><p>
                 <?php
                 // todo: tidy this up
                 include "$root/_lib/filter_attr.php";
                 include "$root/_scripts/getdata.php";
 
+                $debug = true;
                 if ($debug) {
                     print "<pre>";
                     print_r($_POST);
+//                    print_r($data);
                     print "</pre>";
                 }
 
+                //create
                 $list_of_lists = array();
 
                 $list_of_lists[] = $data;
-                $id_superlist    = array();
+                // empty array used for array intersections later on
+                $idNestedList    = array();
 
-                for ($x = 0; $x < count($fishChoice); $x++) {
-                    if ($_POST[$fishChoice[$x]] != "") {
-                        echo $_POST[$fishChoice[$x]];
+                // loop through each fish possibility
+                for ($i = 0; $i < count($fishChoice); $i++) {
+                    // test if any given checkbox is present in POST array
+                    if ($_POST[$fishChoice[$i]] != "") {
+                        echo $_POST[$fishChoice[$i]];       // print out name of fish that is in POST array
                         print "<br>";
-                        $name      = str_replace(' ', '', $fishList[$x]);
-                        $fishArray = filter_attr($data, $name, $_POST[$x]);
+
+                        $fishName  = str_replace(' ', '', $fishList[$i]);   // trim whitespace to match keys in $data
+                        $fishArray = filter_attr($data, $fishName, true);         // filter out events where you can't find the specified fish
+
+                        // create array of location IDs that match these criteria
                         $fishIds   = array();
                         foreach ($fishArray as $loc) {
                             $id        = $loc['attributes']['id'];
                             $fishIds[] = $id;
                         }
-                        $id_superlist[] = $fishIds;
+                        // add to master ID list
+                        $idNestedList[] = $fishIds;
                     }
                 }
 
-
-                foreach ($trafficChoice as $x) {
-                    if ($_POST[$x] != "") {
-                        echo $_POST[$x];
+                // loop through traffic possibilities
+                foreach ($trafficChoice as $tfc) {
+                    // test if any traffic choice is in POST array
+                    if ($_POST[$tfc] != "") {
+                        echo $_POST[$tfc];      // print out traffic choice
                         print "<br>";
-                        $name = str_replace('mm', 'm', $_POST[$x]);
-                        // echo $name;
-                        $trafficArray = filter_attr($data, "UseVolume", $_POST[$x]);
+
+                        $trafficArray = filter_attr($data, "UseVolume", $_POST[$tfc]); // filter out all events that don't have desired UseVolume value.
+
+                        // create array of location IDs
                         $trafficIds   = array();
                         foreach ($trafficArray as $loc) {
                             $id           = $loc['attributes']['id'];
                             $trafficIds[] = $id;
                         }
-                        $id_superlist[] = $trafficIds;
+                        // add to master ID list
+                        $idNestedList[] = $trafficIds;
                     }
                 }
 
-                foreach ($parkingChoice as $x) {
-                    if ($_POST[$x] != "") {
-                        echo $_POST[$x];
+                // loop through parking possibilities
+                foreach ($parkingChoice as $pc) {
+                    // test if any parking choice is in POST array
+                    if ($_POST[$pc] != "") {
+                        echo $_POST[$pc];   // print chosen parking choice
                         print "<br>";
-                        $parkingArray = filter_attr($data, "Parking", $_POST[$x]);
+
+                        $parkingArray = filter_attr($data, "Parking", $_POST[$pc]); // filter out all events that don't have desired Parking value.
+
+                        // create array of location IDs
                         $parkingIds   = array();
                         foreach ($parkingArray as $loc) {
                             $id           = $loc['attributes']['id'];
                             $parkingIds[] = $id;
                         }
-                        $id_superlist[] = $parkingIds;
+                        // add to master ID list
+                        $idNestedList[] = $parkingIds;
                     }
                 }
 
-                foreach ($binaryChoice as $x) {
-                    if ($_POST[$x] != "") {
-                        echo $_POST[$x];
+                // loop through misc choices
+                foreach ($binaryChoice as $yn) {
+                    // test if any binary options are in POST array
+                    if ($_POST[$yn] != "") {
+                        echo $_POST[$yn]; // print out binary option found
                         print "<br>";
-                        if ($_POST[$x] == "Boats Allowed") {
-                            $boatsArray = array_merge(filter_attr($data, "AccessType", "Boating"), filter_attr($data, "AccessType", "Boating/Fishing"));
+
+                        if ($_POST[$yn] == "Boats Allowed") {
+                            // filter out all locations that don't have boating access
+                            $boatsArray = array_merge(filter_attr($data, "AccessType", "Boating"),
+                                                      filter_attr($data, "AccessType", "Boating/Fishing"));
+
+                            // id array
                             $boatsIds   = array();
                             foreach ($boatsArray as $loc) {
                                 $id         = $loc['attributes']['id'];
                                 $boatsIds[] = $id;
                             }
-                            $id_superlist[] = $boatsIds;
-                        } else if ($_POST[$x] == "Dock Available") {
-                            $dockArray = filter_attr($data, "Dock", TRUE);
+                            $idNestedList[] = $boatsIds;
+
+                        } else if ($_POST[$yn] == "Dock Available") {
+                            // filter out all locations that don't have a dock
+                            $dockArray = filter_attr($data, "Dock", true);
+
+                            // id array
                             $dockIds   = array();
                             foreach ($dockArray as $loc) {
                                 $id        = $loc['attributes']['id'];
                                 $dockIds[] = $id;
                             }
-                            $id_superlist[] = $dockIds;
-                        } else if ($_POST[$x] == "Winter Plowing") {
-                            $winterArray = filter_attr($data, "WinterPlowing", TRUE);
+                            $idNestedList[] = $dockIds;
+
+                        } else if ($_POST[$yn] == "Winter Plowing") {
+                            // filter out all locations that don't have winter plowing
+                            $winterArray = filter_attr($data, "WinterPlowing", true);
+
+                            // id array
                             $winterIds   = array();
                             foreach ($winterArray as $loc) {
                                 $id          = $loc['attributes']['id'];
                                 $winterIds[] = $id;
                             }
-                            $id_superlist[] = $winterIds;
+                            $idNestedList[] = $winterIds;
                         }
                     }
                 }
 
-                $intersected = range(0, 350);
+                // since each location has a unique ID that starts at 0 and ends at n-1 locations, we make a master
+                // array that contains every id between the lowest and highest in the data (inclusive).
+                $allIds = array_map(function ($value) { return $value['attributes']['id']; }, $data); // extract id into a 1-dimensional array
+                $intersected = range(min($allIds), max($allIds));
 
-                foreach ($id_superlist as $thisArray) {
+                foreach ($idNestedList as $thisArray) {
+                    // array_intersect returns an array containing all the values in $intersected that are also present
+                    // in $thisArray. this iterative loop continuously eliminates IDs from $intersected until the only ones
+                    // left are the IDs present in every array contained in $idNestedList.
                     $intersected = array_intersect($intersected, $thisArray);
                 }
 
-                $locations = array();
-                foreach ($data as $location) {
-                    if (in_array($location['attributes']['id'], $intersected)) {
-                        $locations[] = $location;
-                    }
-                }
 
+                $locations = array();   // create array to hold locations that meet every criteria
+                foreach ($data as $loc) {
+                    // each iteration, check if the needle (this location's id) exists in the
+                    // haystack (the array of ids that meet every criteria) and sort accordingly.
+                    if (in_array($loc['attributes']['id'], $intersected))
+                        $locations[] = $loc;
+                }
                 ?>
 
             </p>
@@ -261,6 +295,19 @@ $parkingValue  = "";
             <script type="text/javascript">
                 var mymap = L.map('mapid').setView([44.0511, -72.9245], 7);
 
+                //region popup
+                var popup = L.popup();
+
+                function onMapClick(e) {
+                    popup
+                        .setLatLng(e.latlng)
+                        .setContent("You clicked the map at " + e.latlng.toString())
+                        .openOn(mymap);
+                }
+
+                mymap.on('click', onMapClick);
+                //endregion
+                
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">          CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
                     maxZoom: 18,
@@ -287,24 +334,47 @@ $parkingValue  = "";
                 // todo: add more fields to each popup?
                 var placeList = [
                     <?php
+                    $fishKeys = array_map(function($value) { return str_replace(' ', '', $value); }, $fishList);
+
+                    function fromCamelCase($camelCaseString) {
+                        $re = '/(?<=[a-z])(?=[A-Z])/x';
+                        $a = preg_split($re, $camelCaseString);
+                        return join($a, " " );
+                    }
+
                     foreach ($locations as $location) {
                         $waterBody  = $location['attributes']['WaterBody'];
+                        $town       = $location['attributes']['Town'];
                         $directions = $location['attributes']['Directions'];
-                        $info       = "\"<strong>$waterBody</strong><br>$directions\"";
+                        $distKm     = round($location['distance']['km'], 2);
+
+                        $fishAtSite = array();
+                        foreach($location['attributes'] as $attr => $val) {
+                            if (in_array($attr, $fishKeys) && $val == true)
+                                $fishAtSite[] = fromCamelCase($attr);
+                        }
+
+                        $popupText  = "\"<strong style='font-size: 16px'>$waterBody</strong>"
+                                    . ($hasUserLocationData ? "<span style='float:right'>$distKm mi</span>" : "") . "<br>"
+                                    . "<i>$town, VT</i><hr>"
+                                    . "<span style='text-decoration: underline'>Fish Present</span><br>" . join(", ", $fishAtSite) . "<hr>"
+                                    . " " // todo: add boating availability, traffic, etc.
+                                    . "<p class='fish-left'>$directions</p>\"";
+
                         $lat        = $location['geometry']['y'];
                         $lon        = $location['geometry']['x'];
-                        print "[$info, $lat, $lon]," . PHP_EOL;
+                        print "[$popupText, $lat, $lon]," . PHP_EOL;
                     }
                     ?>
                 ];
 
                 // create each marker and add to map
                 for (var i = 0; i < placeList.length; i++) {
+                    // popup = L.popup({'minWidth': 90}).setContent()
                     marker = new L.marker([placeList[i][1], placeList[i][2]])
-                        .bindPopup(placeList[i][0])
+                        .bindPopup(placeList[i][0], {minWidth:225, maxWidth: 350})
                         .addTo(mymap);
                 }
-            
             </script>
             <?php if (!isset($_POST["btnSubmit"])) print "-->"; ?>
         </div>
