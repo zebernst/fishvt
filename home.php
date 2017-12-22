@@ -3,11 +3,11 @@
 <HTML lang="en">
 
     <head>
-        <title>Fish VT</title>
+        <title>Fish VT | Home</title>
         <meta charset="utf-8">
         <meta name="author" content="UVM CS Crew">
         <meta name="description" content="HackVT">
-        <link rel="icon" type="image/png" href="_images/Pufferfish.png">
+        <link rel="icon" type="image/x-icon" href="<?php print $rootFolder; ?>/favicon.ico">
         <link rel="stylesheet" href="_css/site.css" type="text/css" media="screen">
     </head>
 <body>
