@@ -283,14 +283,28 @@ $parkingValue  = "";
                 ?>
 
             </p>
-            <div id="mapid" style="width: 100%; height: 800px;"></div>
+            <div id="jsMap" style="width: 100%; height: 800px;"></div>
             <?php include "_private/mapboxapi.php"; ?>
-            <script type="text/javascript" src="<?php print $rootFolder; ?>/_lib/us-states.js"></script> <!-- gets geoJSON data for 50 US states stored in variable 'statesData' -->
+            <script type="text/javascript" src="<?php print $rootFolder; ?>/_lib/us-states.js"></script>
             <script type="text/javascript">
-                var vermont = statesData['features'][45]; // isolate vermont geoJSON object
+                // imported script us_states.js provides geoJSON data for all 50 US states, stored in variable 'statesData'
+                // statesData['features'].forEach(function(state) {if state.properties.name.equals("Vermont") vermont = state; });
+
+                // isolate vermont geoJSON object
+                function findStateIndex(array, name) {
+                    for (var idx = 0; idx < array.length; idx++) {
+                        if (array[idx].properties.name === name) {
+                            return idx;
+                        }
+                    }
+                    return 45; // fallback: this returns the correct index at time of writing, but that may change if the geoJSON file is ever updated.
+                }
+
+                var vtIdx = findStateIndex(statesData['features'], "Vermont");
+                var vermont = statesData['features'][vtIdx];
 
                 // initialize map
-                var mymap = L.map('mapid').setView([44.0511, -72.9245], 7);
+                var mymap = L.map('jsMap').setView([44.0511, -72.9245], 7);
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
                     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
