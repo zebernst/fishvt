@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <?php include "_includes/init.php";
 
-
 // variable initializations
 $fishList = array("Bowfin", "Carp", "Channel Catfish", "White Crappie", "Longnose Gar", "Muskellunge", "White Perch", "American Shad", "Sheepshead",
     "Lake Whitefish", "Brook Trout", "Brown Trout", "Rainbow Trout", "Lake Trout", "Landlocked Salmon", "Rainbow Smelt",
@@ -14,13 +13,13 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
     "chkChainPickeral", "chkLargemouthBass", "chkSmallmouthBass", "chkBullhead", "chkPanfish", "chkBlackCrappie",
     "chkBurbot");
 
-$binaryList = array("Boats Allowed", "Dock Available", "Winter Plowing");
-$binaryChoice = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
+$binaryList    = array("Boats Allowed", "Dock Available", "Winter Plowing");
+$binaryChoice  = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
 
 $trafficList   = array("Light", "Moderate", "Heavy", "Seasonal");
 $trafficChoice = array("chkLight", "chkModerate", "chkHeavy", "chkSeasonal");
 
-$parkingList = array("Small", "Medium", "Large");
+$parkingList   = array("Small", "Medium", "Large");
 $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
 $parkingValue  = "";
 
@@ -144,18 +143,12 @@ $parkingValue  = "";
                 include "$root/_lib/filter_attr.php";
                 include "$root/_scripts/getdata.php";
 
-                $debug = true;
                 if ($debug) {
                     print "<pre>";
                     print_r($_POST);
-//                    print_r($data);
                     print "</pre>";
                 }
 
-                //create
-                $list_of_lists = array();
-
-                $list_of_lists[] = $data;
                 // empty array used for array intersections later on
                 $idNestedList    = array();
 
@@ -292,80 +285,111 @@ $parkingValue  = "";
             </p>
             <div id="mapid" style="width: 100%; height: 800px;"></div>
             <?php include "_private/mapboxapi.php"; ?>
+            <script type="text/javascript" src="<?php print $rootFolder; ?>/_lib/us-states.js"></script> <!-- gets geoJSON data for 50 US states stored in variable 'statesData' -->
             <script type="text/javascript">
+                var vermont = statesData['features'][45]; // isolate vermont geoJSON object
+
+                // initialize map
                 var mymap = L.map('mapid').setView([44.0511, -72.9245], 7);
-
-                //region popup
-                var popup = L.popup();
-
-                function onMapClick(e) {
-                    popup
-                        .setLatLng(e.latlng)
-                        .setContent("You clicked the map at " + e.latlng.toString())
-                        .openOn(mymap);
-                }
-
-                mymap.on('click', onMapClick);
-                //endregion
-                
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">          CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
                     maxZoom: 18,
                     id: 'mapbox.streets',
                     accessToken: "<?php print $mapboxApiKey; ?>"
                 }).addTo(mymap);
 
-                var currentLocationIcon = L.icon({
-                    iconUrl: 'images/urhere.png',
+                // define style for geoJSON polygon
+                var vtStyle = {
+                    fillColor   : '<?php !empty($locations) ? print '#3388ff' : print "#c21a20"; ?>',
+                    fillOpacity :  <?php !empty($locations) ? print 0.3       : print 0.45;      ?>,
+                    color       : '<?php !empty($locations) ? print '#3388ff' : print "#c21a20"; ?>',
+                    opacity     : 1,
+                    weight      : 2
+                };
 
-                    iconSize: [48, 48], // size of the icon
-                    iconAnchor: [24, 48], // point of the icon which will correspond to marker's location
-                    popupAnchor: [0, -48] // point from which the popup should open relative to the iconAnchor
+                // create polygon for vermont geoJSON data
+                var vtPolygon = L.geoJSON(vermont, {style: vtStyle});
+                <?php // bind & open warning popup if no valid locations found with current filter criteria
+                if (empty($locations)) print 'vtPolygon.bindPopup("No valid locations were found.<br>Please try again with less restrictive filter criteria.").openPopup()';
+                ?>
+                vtPolygon.addTo(mymap);
+
+                // define custom icon for current location marker
+                var currentLocationIcon = L.icon({
+                    iconUrl     : 'images/urhere.png',
+                    iconSize    : [48, 48],  // size of the icon
+                    iconAnchor  : [24, 48],  // point of the icon which will correspond to marker's location
+                    popupAnchor : [0, -48]   // point from which the popup should open relative to the iconAnchor
                 });
 
                 // create current location marker (if applicable)
                 var marker;
-                <?php if (!$hasUserLocationData) print "/*" . PHP_EOL; ?>
+                <?php if (!$hasUserLocationData) print "/*" . PHP_EOL; // if there isn't user location data, comment out the current location marker ?>
                 marker = new L.marker([<?php if ($hasUserLocationData) print $userLat; ?>, <?php if ($hasUserLocationData) print $userLon; ?>], {icon: currentLocationIcon})
                     .bindPopup("<strong>Your current location</strong>")
                     .addTo(mymap);
                 <?php if (!$hasUserLocationData) print "*/" . PHP_EOL; ?>
 
-                // todo: add more fields to each popup?
+                // loop through php array and create each marker's popup content and lat/long arrays
                 var placeList = [
-                    <?php
-                    $fishKeys = array_map(function($value) { return str_replace(' ', '', $value); }, $fishList);
+                    <?php if (!empty($locations)) {
+                        $fishKeys = array_map(function ($value) { return str_replace(' ', '', $value); }, $fishList);
 
-                    function fromCamelCase($camelCaseString) {
-                        $re = '/(?<=[a-z])(?=[A-Z])/x';
-                        $a = preg_split($re, $camelCaseString);
-                        return join($a, " " );
-                    }
-
-                    foreach ($locations as $location) {
-                        $waterBody  = $location['attributes']['WaterBody'];
-                        $town       = $location['attributes']['Town'];
-                        $directions = $location['attributes']['Directions'];
-                        $distKm     = round($location['distance']['km'], 2);
-
-                        $fishAtSite = array();
-                        foreach($location['attributes'] as $attr => $val) {
-                            if (in_array($attr, $fishKeys) && $val == true)
-                                $fishAtSite[] = fromCamelCase($attr);
+                        function fromCamelCase($camelCaseString)
+                        {
+                            $re = '/(?<=[a-z])(?=[A-Z])/x';
+                            $a  = preg_split($re, $camelCaseString);
+                            return join($a, " ");
                         }
 
-                        $popupText  = "\"<strong style='font-size: 16px'>$waterBody</strong>"
-                                    . ($hasUserLocationData ? "<span style='float:right'>$distKm mi</span>" : "") . "<br>"
-                                    . "<i>$town, VT</i><hr>"
-                                    . "<span style='text-decoration: underline'>Fish Present</span><br>" . join(", ", $fishAtSite) . "<hr>"
-                                    . " " // todo: add boating availability, traffic, etc.
-                                    . "<p class='fish-left'>$directions</p>\"";
 
-                        $lat        = $location['geometry']['y'];
-                        $lon        = $location['geometry']['x'];
-                        print "[$popupText, $lat, $lon]," . PHP_EOL;
-                    }
-                    ?>
+                        foreach ($locations as $location) {
+                            $accessName = $location['attributes']['AccessName'];
+                            $town       = $location['attributes']['Town'];
+                            $county     = $location['attributes']['County'];
+                            $directions = $location['attributes']['Directions'];
+                            $distKm     = round($location['distance']['km'], 2);
+
+                            // get array of fish present at location
+                            $fishAtSite = array();
+                            foreach ($location['attributes'] as $attr => $val) {
+                                if (in_array($attr, $fishKeys) && $val == true)
+                                    $fishAtSite[] = fromCamelCase($attr);
+                            }
+
+                            $boatSize     = ($location['attributes']['BoatSize'] != null) ? $location['attributes']['BoatSize'] : "N/A";
+                            $accessType   = $location['attributes']['AccessType'];
+                            $parking      = $location['attributes']['Parking'];
+                            $shoreFishing = $location['attributes']['Shorefishing'];
+                            $popularity   = ($location['attributes']['UseVolume'] != null) ? $location['attributes']['UseVolume'] : "N/A";
+
+                            // assemble popup html text
+                            $popupHtml = "\""
+                                . "<span style='font-size:16px;float:left'><strong>$accessName</strong></span>"
+                                . ($hasUserLocationData ? "<span style='float:right'>$distKm mi</span>" : "")
+                                . "<br style='clear:both'>"
+                                . "<span><i>$town, VT | $county Cty.</i></span>"
+                                . "<br><hr>"
+                                . "<span style='text-decoration:underline'>Fish Present</span><br>" . join(", ", $fishAtSite)
+                                . "<hr>"
+                                . "<ul>"
+                                . "<li class='popupLi'>Activities: $accessType</li>"
+                                . "<li class='popupLi'>Max boat size: $boatSize</li>"
+                                . "<li class='popupLi'>Parking capacity: $parking</li>"
+                                . "<li class='popupLi'>Foot traffic: $popularity</li>"
+                                . "</ul><br style='clear:both'>"
+                                . "<span>Shorefishing: $shoreFishing</span>"
+                                . "<hr>"
+                                . "<p style='text-align:left'>$directions</p>"
+                                . "\"";
+
+                            $lat = $location['geometry']['y'];
+                            $lon = $location['geometry']['x'];
+                            print "[$popupHtml, $lat, $lon]," . PHP_EOL;
+                        }
+                    } ?>
                 ];
 
                 // create each marker and add to map
@@ -376,7 +400,7 @@ $parkingValue  = "";
                         .addTo(mymap);
                 }
             </script>
-            <?php if (!isset($_POST["btnSubmit"])) print "-->"; ?>
+            <?php if (!isset($_POST["btnSubmit"])) print "-->"; // end conditional map display ?>
         </div>
 
         <br>
