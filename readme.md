@@ -1,8 +1,13 @@
 # Fish Vermont
 #### HackVT 2017 Student Prize Winner
 Created for HackVT 2017: _Undiscovered Vermont_ by the UVM CS Crew. 
-The four crew members who collaborated on this project are Zach Bernstein (Data Science '20),
-Aaron Seibring (Computer Science '20), PJ Solomon (Computer Science '20), and Nathan Tolley (Computer Science '20).
+The four crew members who collaborated on this project are:  
+* Zach Bernstein (Data Science '20)
+* Aaron Seibring (Computer Science '20)
+* PJ Solomon (Computer Science '20)
+* Nathan Tolley (Computer Science '20)
+
+Dataset used: [VT ANR Fishing Access Areas](http://geodata.vermont.gov/datasets/VTANR::fishing-access-areas)
 
 <!-- todo: description of the challenge -->
 
