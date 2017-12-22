@@ -6,12 +6,6 @@
  * Time: 3:46 PM
  */
 
-/* ### fetch data (python) [OBSOLETE] ###
-$cmd = escapeshellcmd("python $root/_scripts/getdata.py 44.518087699999995 -73.18415689999999");
-$output = shell_exec($cmd);
-$data = json_decode($output, true);
-*/
-
 
 /** calculates great-circle distance between two points on sphere
  *
