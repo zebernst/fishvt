@@ -5,7 +5,7 @@
       <paths name="Silk">
         <serverdata>
           <mappings>
-            <mapping deploy="/www-root/hackvt" local="$PROJECT_DIR$" web="/hackvt" />
+            <mapping deploy="/www-root/fishvt" local="$PROJECT_DIR$" web="/fishvt" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/.gitignore" />

@@ -15,4 +15,4 @@ Dataset used: [VT ANR Fishing Access Areas](http://geodata.vermont.gov/datasets/
 
 <!-- todo: description of the process of the hackathon -->
 
-A live version of the project can be found [here](http://zebernst.w3.uvm.edu/hackvt/home.php).
+A live version of the project can be found [here](http://zebernst.w3.uvm.edu/fishvt/home.php).
