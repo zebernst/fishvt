@@ -194,7 +194,7 @@ button {
     margin : 0 auto;
 }
 
-.fish-left {
+.ta-left {
     text-align : left;
 }
 
@@ -207,8 +207,27 @@ ul {
     list-style-type: none;
 }
 
+/* leaflet.js map popups */
+
 .popupLi {
     display: inline-block;
     width: 50%;
     float: left;
+}
+
+.popupHeader {
+    font-size:16px;
+    float:left
+}
+
+.popupDist {
+    float:right
+}
+
+.clr {
+    clear: both;
+}
+
+.uline {
+    text-decoration:underline
 }

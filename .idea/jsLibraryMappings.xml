@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{jquery-3.2.1, leaflet}" />
+    <file url="PROJECT" libraries="{d3-array.v1, d3-geo.v1, jquery-3.2.1, leaflet, leaflet-pip}" />
   </component>
 </project>

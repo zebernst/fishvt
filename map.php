@@ -41,6 +41,10 @@ $parkingValue  = "";
         <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
                 integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
                 crossorigin=""></script>
+        <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
+        <!-- d3 -->
+        <script src="https://d3js.org/d3-array.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo.v1.min.js"></script>
         <!-- jQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
@@ -53,7 +57,7 @@ $parkingValue  = "";
         <div id="mapRectangle">
 
             <!-- PROMPT USER FOR SOME FISH -->
-            <form action="<?php print $phpSelf; ?>" id="frmRegister" method="post">
+            <form action="<?php print $phpSelf; ?>#jsMap" id="frmRegister" method="post">
                 <fieldset class="checkbox contact">
                     <legend>Fish: Check all that apply, or select none to search all sites</legend>
                     <br>
@@ -61,7 +65,7 @@ $parkingValue  = "";
                         <?php
                         for ($x = 0; $x < count($fishList); $x++) {
                             if ($x % 4 == 0) echo "<tr>" . PHP_EOL; // 4 cols
-                            echo "<th class='fish-left'>";
+                            echo "<th class='ta-left'>";
                             echo "<label><input id='$fishChoice[$x]' name='$fishChoice[$x]'
                                          type='checkbox'      value='$fishList[$x]'>$fishList[$x]</label>";
                             echo "</th>" . PHP_EOL;
@@ -140,6 +144,8 @@ $parkingValue  = "";
             <h3>You selected:</h3><p>
                 <?php
                 // todo: tidy this up
+                // todo: make the "you selected" menu more verbose and styled better
+                // todo: add links to data sources (VT ANR and http://eric.clst.org/Stuff/USGeoJSON)
                 include "$root/_lib/filter_attr.php";
                 include "$root/_scripts/getdata.php";
 
@@ -284,24 +290,10 @@ $parkingValue  = "";
 
             </p>
             <div id="jsMap" style="width: 100%; height: 800px;"></div>
-            <?php include "_private/mapboxapi.php"; ?>
-            <script type="text/javascript" src="<?php print $rootFolder; ?>/_lib/us-states.js"></script>
+            <script type="text/javascript" src="<?php print $rootFolder; ?>/_lib/vermont-geojson.js"></script>
             <script type="text/javascript">
-                // imported script us_states.js provides geoJSON data for all 50 US states, stored in variable 'statesData'
-                // statesData['features'].forEach(function(state) {if state.properties.name.equals("Vermont") vermont = state; });
-
-                // isolate vermont geoJSON object
-                function findStateIndex(array, name) {
-                    for (var idx = 0; idx < array.length; idx++) {
-                        if (array[idx].properties.name === name) {
-                            return idx;
-                        }
-                    }
-                    return 45; // fallback: this returns the correct index at time of writing, but that may change if the geoJSON file is ever updated.
-                }
-
-                var vtIdx = findStateIndex(statesData['features'], "Vermont");
-                var vermont = statesData['features'][vtIdx];
+                // imported script vermont-geojson.js provides GeoJSON data for the state of Vermont and its counties, stored in
+                // variables 'vermontBorder' and 'vermontCounties'
 
                 // initialize map
                 var mymap = L.map('jsMap').setView([44.0511, -72.9245], 7);
@@ -311,108 +303,132 @@ $parkingValue  = "";
                     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
                     maxZoom: 18,
                     id: 'mapbox.streets',
-                    accessToken: "<?php print $mapboxApiKey; ?>"
+                    accessToken: "<?php include "_private/mapboxapi.php"; print $mapboxApiKey; ?>"
                 }).addTo(mymap);
 
-                // define style for geoJSON polygon
-                var vtStyle = {
-                    fillColor   : '<?php !empty($locations) ? print '#3388ff' : print "#c21a20"; ?>',
-                    fillOpacity :  <?php !empty($locations) ? print 0.3       : print 0.45;      ?>,
-                    color       : '<?php !empty($locations) ? print '#3388ff' : print "#c21a20"; ?>',
-                    opacity     : 1,
-                    weight      : 2
-                };
-
-                // create polygon for vermont geoJSON data
-                var vtPolygon = L.geoJSON(vermont, {style: vtStyle});
-                <?php // bind & open warning popup if no valid locations found with current filter criteria
-                if (empty($locations)) print 'vtPolygon.bindPopup("No valid locations were found.<br>Please try again with less restrictive filter criteria.").openPopup()';
-                ?>
-                vtPolygon.addTo(mymap);
 
                 // define custom icon for current location marker
                 var currentLocationIcon = L.icon({
-                    iconUrl     : 'images/urhere.png',
+                    iconUrl     : '_images/urhere.png',
                     iconSize    : [48, 48],  // size of the icon
                     iconAnchor  : [24, 48],  // point of the icon which will correspond to marker's location
                     popupAnchor : [0, -48]   // point from which the popup should open relative to the iconAnchor
                 });
 
+                // create array for markers
+                var markers = [];
+
                 // create current location marker (if applicable)
-                var marker;
                 <?php if (!$hasUserLocationData) print "/*" . PHP_EOL; // if there isn't user location data, comment out the current location marker ?>
-                marker = new L.marker([<?php if ($hasUserLocationData) print $userLat; ?>, <?php if ($hasUserLocationData) print $userLon; ?>], {icon: currentLocationIcon})
+                var yourMarker = new L.marker([<?php if ($hasUserLocationData) print $userLat; ?>, <?php if ($hasUserLocationData) print $userLon; ?>], {icon: currentLocationIcon})
                     .bindPopup("<strong>Your current location</strong>")
                     .addTo(mymap);
+                markers.push(yourMarker);
                 <?php if (!$hasUserLocationData) print "*/" . PHP_EOL; ?>
 
-                // loop through php array and create each marker's popup content and lat/long arrays
-                var placeList = [
-                    <?php if (!empty($locations)) {
-                        $fishKeys = array_map(function ($value) { return str_replace(' ', '', $value); }, $fishList);
+                // push location markers into javascript array
+                <?php if (!empty($locations)) {
+                    $fishKeys = array_map(function ($value) { return str_replace(' ', '', $value); }, $fishList);
 
-                        function fromCamelCase($camelCaseString)
-                        {
-                            $re = '/(?<=[a-z])(?=[A-Z])/x';
-                            $a  = preg_split($re, $camelCaseString);
-                            return join($a, " ");
+                    function fromCamelCase($camelCaseString) {
+                        $re = '/(?<=[a-z])(?=[A-Z])/x';
+                        $a  = preg_split($re, $camelCaseString);
+                        return join($a, " ");
+                    }
+
+
+                    foreach ($locations as $location) {
+                        $accessName = $location['attributes']['AccessName'];
+                        $town       = $location['attributes']['Town'];
+                        $county     = $location['attributes']['County'];
+                        $directions = $location['attributes']['Directions'];
+                        $distKm     = round($location['distance']['km'], 2);
+
+                        // get array of fish present at location
+                        $fishAtSite = array();
+                        foreach ($location['attributes'] as $attr => $val) {
+                            if (in_array($attr, $fishKeys) && $val == true)
+                                $fishAtSite[] = fromCamelCase($attr);
                         }
 
+                        $boatSize     = ($location['attributes']['BoatSize'] != null) ? $location['attributes']['BoatSize'] : "N/A";
+                        $accessType   = $location['attributes']['AccessType'];
+                        $parking      = $location['attributes']['Parking'];
+                        $shoreFishing = $location['attributes']['Shorefishing'];
+                        $popularity   = ($location['attributes']['UseVolume'] != null) ? $location['attributes']['UseVolume'] : "N/A";
 
-                        foreach ($locations as $location) {
-                            $accessName = $location['attributes']['AccessName'];
-                            $town       = $location['attributes']['Town'];
-                            $county     = $location['attributes']['County'];
-                            $directions = $location['attributes']['Directions'];
-                            $distKm     = round($location['distance']['km'], 2);
+                        // assemble popup html text
+                        $popupHtml = "\""
+                            . "<span class='popupHeader'><strong>$accessName</strong></span>"
+                            . ($hasUserLocationData ? "<span class='popupDist'>$distKm mi</span>" : "")
+                            . "<br class='clr'>"
+                            . "<span><i>$town, VT | $county Cty.</i></span>"
+                            . "<br><hr>"
+                            . "<span class='uline'>Fish Present</span><br>" . join(", ", $fishAtSite)
+                            . "<hr>"
+                            . "<ul>"
+                            . "<li class='popupLi'>Activities: $accessType</li>"
+                            . "<li class='popupLi'>Max boat size: $boatSize</li>"
+                            . "<li class='popupLi'>Parking capacity: $parking</li>"
+                            . "<li class='popupLi'>Foot traffic: $popularity</li>"
+                            . "</ul><br class='clr'>"
+                            . "<span>Shorefishing: $shoreFishing</span>"
+                            . "<hr>"
+                            . "<p class='ta-left'>$directions</p>"
+                            . "\"";
 
-                            // get array of fish present at location
-                            $fishAtSite = array();
-                            foreach ($location['attributes'] as $attr => $val) {
-                                if (in_array($attr, $fishKeys) && $val == true)
-                                    $fishAtSite[] = fromCamelCase($attr);
-                            }
+                        $lat = $location['geometry']['y'];
+                        $lon = $location['geometry']['x']; ?>
 
-                            $boatSize     = ($location['attributes']['BoatSize'] != null) ? $location['attributes']['BoatSize'] : "N/A";
-                            $accessType   = $location['attributes']['AccessType'];
-                            $parking      = $location['attributes']['Parking'];
-                            $shoreFishing = $location['attributes']['Shorefishing'];
-                            $popularity   = ($location['attributes']['UseVolume'] != null) ? $location['attributes']['UseVolume'] : "N/A";
+                markers.push(new L.marker(<?php print "[$lat, $lon]"; ?>).bindPopup(<?php print $popupHtml; ?>, {minWidth:225, maxWidth: 350}));
+            <?php   }
+                } ?>
 
-                            // assemble popup html text
-                            $popupHtml = "\""
-                                . "<span style='font-size:16px;float:left'><strong>$accessName</strong></span>"
-                                . ($hasUserLocationData ? "<span style='float:right'>$distKm mi</span>" : "")
-                                . "<br style='clear:both'>"
-                                . "<span><i>$town, VT | $county Cty.</i></span>"
-                                . "<br><hr>"
-                                . "<span style='text-decoration:underline'>Fish Present</span><br>" . join(", ", $fishAtSite)
-                                . "<hr>"
-                                . "<ul>"
-                                . "<li class='popupLi'>Activities: $accessType</li>"
-                                . "<li class='popupLi'>Max boat size: $boatSize</li>"
-                                . "<li class='popupLi'>Parking capacity: $parking</li>"
-                                . "<li class='popupLi'>Foot traffic: $popularity</li>"
-                                . "</ul><br style='clear:both'>"
-                                . "<span>Shorefishing: $shoreFishing</span>"
-                                . "<hr>"
-                                . "<p style='text-align:left'>$directions</p>"
-                                . "\"";
+                // add location markers to map
+                markers.forEach(function (marker) { marker.addTo(mymap); });
 
-                            $lat = $location['geometry']['y'];
-                            $lon = $location['geometry']['x'];
-                            print "[$popupHtml, $lat, $lon]," . PHP_EOL;
-                        }
-                    } ?>
-                ];
+                // add and style county layers
+                vermontCounties.features.forEach(function (value) {
+                    var layer = L.geoJSON(value);
+                    // uses leafletPip plugin to determine whether each county contains any valid fishing spots
+                    var isEmpty = !markers.some(function(marker) { return (leafletPip.pointInLayer(marker.getLatLng(), layer, true).length === 1); });
+                    switch (isEmpty) {
+                        case false:
+                            layer.setStyle({
+                                fillColor   : '#3388ff',
+                                fillOpacity : 0.2,
+                                color       : '#3388ff',
+                                opacity     : 1,
+                                weight      : 1.3
+                            });
+                        break;
+                        case true:
+                            layer.setStyle({
+                                fillColor   : '#3388ff', //'#c21a20',
+                                fillOpacity : 0.15,
+                                color       : '#3388ff',
+                                opacity     : 1,
+                                weight      : 1.3
+                            });
+                        break;
+                    }
+                    // only adds county layers to map if there are valid fishing locations
+                    <?php if (!empty($locations)) print "layer.addTo(mymap);"; ?>
+                });
 
-                // create each marker and add to map
-                for (var i = 0; i < placeList.length; i++) {
-                    // popup = L.popup({'minWidth': 90}).setContent()
-                    marker = new L.marker([placeList[i][1], placeList[i][2]])
-                        .bindPopup(placeList[i][0], {minWidth:225, maxWidth: 350})
-                        .addTo(mymap);
-                }
+                // add state border to map (style changes depending on whether or not the search returned any results.
+                L.geoJSON(vermontBorder)
+                    .setStyle({
+                        fillColor   : '<?php !empty($locations) ? print '#ffffff' : print "#c21a20"; ?>',
+                        fillOpacity : '<?php !empty($locations) ? print 0         : print 0.45;      ?>',
+                        color       : '<?php !empty($locations) ? print '#3388ff' : print "#c21a20"; ?>',
+                        opacity     : 1,
+                        weight      : 3
+                    })
+                    .addTo(mymap)
+                <?php // bind & open warning popup if no valid locations found with current filter criteria
+                if (empty($locations)) print '.bindPopup("No valid locations were found.<br>Please try again with less restrictive filter criteria.").openPopup()';
+                ?>;
             </script>
             <?php if (!isset($_POST["btnSubmit"])) print "-->"; // end conditional map display ?>
         </div>
