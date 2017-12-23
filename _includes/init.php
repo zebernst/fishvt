@@ -22,8 +22,8 @@ $host  = parse_url($domain, PHP_URL_HOST);   // get url hostname (i.e. zebernst.
 $netId = explode('.', $host)[0];               // extract netId from hostname
 $root  = $_SERVER['DOCUMENT_ROOT'];                    // contains filesystem folder (e.g. /users/z/e/zebernst/www-root)
 switch ($netId) {                                      // add root subdirectory based on which silk account it's running on
-    case "zebernst" : $rootFolder = "/fishvt"; break;
-    default         : $rootFolder = "/fishvt"; break;
+    case "zebernst" : $rootFolder = "/fishvt";  break;
+    default         : $rootFolder = "";         break;
 }
 $root .= $rootFolder;
 

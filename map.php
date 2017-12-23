@@ -124,7 +124,7 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
 
 
                 <p id="geoStatus"></p>
-                <?php include "$root/_includes/geolocation.php"; ?>
+                <script type="text/javascript" src="<?= $rootFolder; ?>/_lib/geolocation.js"></script>
                 <hr>
                 <!--BUTTONS AND WIRES -->
                 <fieldset class="buttons">
@@ -137,7 +137,18 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
             </form>
 
             <?= isset($_POST["btnSubmit"]) ? "<h3>You selected:</h3>" : "<p>Press submit to view a map of fishing spots!</p><!--"; // comment out map if form has not been submitted ?>
+            <?php include "$root/_lib/filter_attr.php"; ?>
+            <?php include "$root/_scripts/getdata.php"; ?>
             <p>
+                <?php // make copy of post array to print message if no checkboxes were checked
+                    $postCopy = $_POST;
+                    unset($postCopy["currentPos"]);
+                    unset($postCopy["btnSubmit"]);
+                ?>
+
+                <?php if (empty($postCopy)): ?>
+                Do not filter (Showing all sites)
+                <?php endif; ?>
 
                 <?php /*fish*/ foreach (array_intersect_key($_POST, array_flip($fishChoice)) as $key => $fish): ?>
                     <?= $fish ?><br>
@@ -159,8 +170,6 @@ $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
                 // todo: tidy this up
                 // todo: make the "you selected" menu more verbose and styled better
                 // todo: add links to data sources (VT ANR and http://eric.clst.org/Stuff/USGeoJSON)
-                include "$root/_lib/filter_attr.php";
-                include "$root/_scripts/getdata.php";
 
                 if ($debug) {
                     print "<pre>";

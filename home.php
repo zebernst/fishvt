@@ -7,13 +7,13 @@
         <meta charset="utf-8">
         <meta name="author" content="UVM CS Crew">
         <meta name="description" content="HackVT">
-        <link rel="icon" type="image/x-icon" href="<?php print $rootFolder; ?>/favicon.ico">
-        <link rel="stylesheet" href="_css/site.css" type="text/css" media="screen">
+        <link rel="icon" type="image/x-icon" href="<?= $rootFolder; ?>/favicon.ico">
+        <link rel="stylesheet" href="<?= $rootFolder; ?>/_css/site.css" type="text/css" media="screen">
     </head>
 <body>
     <?php include "$root/_includes/nav.php"; ?>
     <br>
-    <img id="imageboy" src="_images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
+    <img id="imageboy" src="<?= $rootFolder; ?>/_images/flyfishing2.jpg" alt="A lone man fishes in the wilderness of VT">
     <br>
 
     <div id="rectangle">
@@ -27,11 +27,10 @@
         <p>In order to let visitors and residents alike know about the
            options available to them, FishVT has created an accessible, easy-to-use, and highly customizable web site
            where fishing enthusiasts can locate the best fishing holes nearby.</p>
-
         </div>
         <h2>About Us</h2>
         <p>We are four sophomores currently enrolled at the University of Vermont.</p>
-        <img id="boys" src="_images/death.jpg" alt="That Gang's All Here">
+        <img id="boys" src="<?= $rootFolder; ?>/_images/death.jpg" alt="That Gang's All Here">
         <h3>Useful Links</h3>
         <table><tr>
         <th><a href="http://www.vtfishandwildlife.com/licenses_and_lotteries/license_center">Vermont License Center</a></th>
