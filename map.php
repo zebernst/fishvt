@@ -16,13 +16,12 @@ $fishChoice = array("chkBowfin", "chkCarp", "chkChannelCatfish", "chkWhiteCrappi
 $binaryList    = array("Boats Allowed", "Dock Available", "Winter Plowing");
 $binaryChoice  = array("chkBoatsAllowed", "chkDockAvailable", "chkWinterPlowing");
 
+// todo: convert traffic and parking into drop-down menus
 $trafficList   = array("Light", "Moderate", "Heavy", "Seasonal");
 $trafficChoice = array("chkLight", "chkModerate", "chkHeavy", "chkSeasonal");
 
 $parkingList   = array("Small", "Medium", "Large");
 $parkingChoice = array("chkSmall", "chkMedium", "chkLarge");
-$parkingValue  = "";
-
 ?>
 
 <HTML lang="en">
@@ -31,8 +30,8 @@ $parkingValue  = "";
         <meta charset="utf-8">
         <meta name="author" content="UVM CS Crew">
         <meta name="description" content="HackVT">
-        <link rel="icon" type="image/x-icon" href="<?php print $rootFolder; ?>/favicon.ico">
-        <link rel="stylesheet" href="_css/site.css" type="text/css" media="screen">
+        <link rel="icon" type="image/x-icon" href="<?= $rootFolder ?>/favicon.ico">
+        <link rel="stylesheet" href="<?= $rootFolder ?>/_css/site.css" type="text/css" media="screen">
 
         <!-- leaflet.js -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
@@ -42,9 +41,6 @@ $parkingValue  = "";
                 integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
                 crossorigin=""></script>
         <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
-        <!-- d3 -->
-        <script src="https://d3js.org/d3-array.v1.min.js"></script>
-        <script src="https://d3js.org/d3-geo.v1.min.js"></script>
         <!-- jQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
@@ -52,26 +48,26 @@ $parkingValue  = "";
     <body>
         <?php include "$root/_includes/nav.php"; ?>
         <br>
-        <img id="imageboy" src="<?php print $rootFolder; ?>/_images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
+        <img id="imageboy" src="<?= $rootFolder ?>/_images/flyfish.jpg" alt="A lone man fishes in the wilderness of VT">
         <br>
         <div id="mapRectangle">
 
             <!-- PROMPT USER FOR SOME FISH -->
-            <form action="<?php print $phpSelf; ?>#jsMap" id="frmRegister" method="post">
+            <form action="<?= $phpSelf; ?>#jsMap" id="frmRegister" method="post">
                 <fieldset class="checkbox contact">
                     <legend>Fish: Check all that apply, or select none to search all sites</legend>
                     <br>
                     <table style="width: 100%">
-                        <?php
-                        for ($x = 0; $x < count($fishList); $x++) {
-                            if ($x % 4 == 0) echo "<tr>" . PHP_EOL; // 4 cols
-                            echo "<th class='ta-left'>";
-                            echo "<label><input id='$fishChoice[$x]' name='$fishChoice[$x]'
-                                         type='checkbox'      value='$fishList[$x]'>$fishList[$x]</label>";
-                            echo "</th>" . PHP_EOL;
-                            if ($x % 4 == 4) echo "</tr>" . PHP_EOL; // 4 cols
-                        }
-                        ?>
+                    <?php for ($x = 0; $x < count($fishList); $x++): ?>
+                        <?php if ($x % 4 == 0): ?><tr><?php endif; // 4 cols ?>
+                        <th class='ta-left'>
+                            <label><input id='<?= $fishChoice[$x] ?>'
+                                          name='<?= $fishChoice[$x] ?>'
+                                          value='<?= $fishList[$x] ?>'
+                                          type='checkbox'><?= $fishList[$x] ?></label>
+                        </th>
+                        <?php if ($x % 4 == 4): ?></tr><?php endif; ?>
+                    <?php endfor; ?>
                     </table>
                 </fieldset>
                 <hr>
@@ -80,14 +76,14 @@ $parkingValue  = "";
                     <br>
                     <table style="width: 100%">
                         <tr>
-                            <?php
-                            for ($x = 0; $x < count($trafficList); $x++) {
-                                echo "<th>";
-                                echo "<label><input id='$trafficChoice[$x]' name='$trafficChoice[$x]'
-                                                type='checkbox'         value='$trafficList[$x]'>$trafficList[$x]</label>";
-                                echo "</th>" . PHP_EOL;
-                            }
-                            ?>
+                        <?php for ($x = 0; $x < count($trafficList); $x++): ?>
+                            <th>
+                            <label><input id='<?= $trafficChoice[$x] ?>'
+                                          name='<?= $trafficChoice[$x] ?>'
+                                          value='<?= $trafficList[$x] ?>'
+                                          type='checkbox'><?= $trafficList[$x] ?></label>
+                            </th>
+                        <?php endfor; ?>
                         </tr>
                     </table>
                 </fieldset>
@@ -97,14 +93,14 @@ $parkingValue  = "";
                     <br>
                     <table style="width: 100%">
                         <tr>
-                            <?php
-                            for ($x = 0; $x < count($parkingList); $x++) {
-                                echo "<th>";
-                                echo "<label><input id='$parkingChoice[$x]' name='$parkingChoice[$x]'
-                                                    type='checkbox'         value='$parkingList[$x]'>$parkingList[$x]</label>";
-                                echo "</th>" . PHP_EOL;
-                            }
-                            ?>
+                        <?php for ($x = 0; $x < count($parkingList); $x++): ?>
+                            <th>
+                            <label><input id='<?= $parkingChoice[$x] ?>'
+                                          name='<?= $parkingChoice[$x] ?>'
+                                          value='<?= $parkingList[$x] ?>'
+                                          type='checkbox'><?= $parkingList[$x] ?></label>
+                            </th>
+                        <?php endfor; ?>
                         </tr>
                     </table>
                 </fieldset>
@@ -114,21 +110,21 @@ $parkingValue  = "";
                     <br>
                     <table style="width: 100%">
                         <tr>
-                            <?php
-                            for ($x = 0; $x < count($binaryList); $x++) {
-                                echo "<th>";
-                                echo "<label><input id='$binaryChoice[$x]' name='$binaryChoice[$x]'
-                                                    type='checkbox'        value='$binaryList[$x]'>$binaryList[$x]</label>";
-                                echo "</th>" . PHP_EOL;
-                            }
-                            ?>
+                        <?php for ($x = 0; $x < count($binaryList); $x++): ?>
+                            <th>
+                            <label><input id='<?= $binaryChoice[$x] ?>'
+                                          name='<?= $binaryChoice[$x] ?>'
+                                          value='<?= $binaryList[$x] ?>'
+                                          type='checkbox'><?= $binaryList[$x] ?></label>
+                            </th>
+                        <?php endfor; ?>
                         </tr>
                     </table>
                 </fieldset>
 
 
                 <p id="geoStatus"></p>
-                <?php include("$root/_includes/geolocation.php"); ?>
+                <?php include "$root/_includes/geolocation.php"; ?>
                 <hr>
                 <!--BUTTONS AND WIRES -->
                 <fieldset class="buttons">
@@ -140,9 +136,26 @@ $parkingValue  = "";
 
             </form>
 
-            <?php if (!isset($_POST["btnSubmit"])) print "<p>Press submit to view a map of fishing spots!</p><!--"; // comment out map if form has not been submitted ?>
-            <h3>You selected:</h3><p>
-                <?php
+            <?= isset($_POST["btnSubmit"]) ? "<h3>You selected:</h3>" : "<p>Press submit to view a map of fishing spots!</p><!--"; // comment out map if form has not been submitted ?>
+            <p>
+
+                <?php /*fish*/ foreach (array_intersect_key($_POST, array_flip($fishChoice)) as $key => $fish): ?>
+                    <?= $fish ?><br>
+                <?php endforeach; ?>
+
+                <?php /*traffic*/ foreach (array_intersect_key($_POST, array_flip($trafficChoice)) as $key => $use): ?>
+                    <?= "Foot traffic: $use" ?><br>
+                <?php endforeach; ?>
+
+                <?php /*parking*/ foreach (array_intersect_key($_POST, array_flip($parkingChoice)) as $key => $pc): ?>
+                    <?= "Parking capacity: $pc" ?><br>
+                <?php endforeach; ?>
+
+                <?php /*misc*/ foreach (array_intersect_key($_POST, array_flip($binaryChoice)) as $key => $yn): ?>
+                    <?= $yn ?><br>
+                <?php endforeach; ?>
+            </p>
+            <?php
                 // todo: tidy this up
                 // todo: make the "you selected" menu more verbose and styled better
                 // todo: add links to data sources (VT ANR and http://eric.clst.org/Stuff/USGeoJSON)
@@ -156,15 +169,12 @@ $parkingValue  = "";
                 }
 
                 // empty array used for array intersections later on
-                $idNestedList    = array();
+                $idNestedList = array();
 
                 // loop through each fish possibility
                 for ($i = 0; $i < count($fishChoice); $i++) {
                     // test if any given checkbox is present in POST array
                     if ($_POST[$fishChoice[$i]] != "") {
-                        echo $_POST[$fishChoice[$i]];       // print out name of fish that is in POST array
-                        print "<br>";
-
                         $fishName  = str_replace(' ', '', $fishList[$i]);   // trim whitespace to match keys in $data
                         $fishArray = filter_attr($data, $fishName, true);         // filter out events where you can't find the specified fish
 
@@ -183,9 +193,6 @@ $parkingValue  = "";
                 foreach ($trafficChoice as $tfc) {
                     // test if any traffic choice is in POST array
                     if ($_POST[$tfc] != "") {
-                        echo $_POST[$tfc];      // print out traffic choice
-                        print "<br>";
-
                         $trafficArray = filter_attr($data, "UseVolume", $_POST[$tfc]); // filter out all events that don't have desired UseVolume value.
 
                         // create array of location IDs
@@ -203,9 +210,6 @@ $parkingValue  = "";
                 foreach ($parkingChoice as $pc) {
                     // test if any parking choice is in POST array
                     if ($_POST[$pc] != "") {
-                        echo $_POST[$pc];   // print chosen parking choice
-                        print "<br>";
-
                         $parkingArray = filter_attr($data, "Parking", $_POST[$pc]); // filter out all events that don't have desired Parking value.
 
                         // create array of location IDs
@@ -223,9 +227,6 @@ $parkingValue  = "";
                 foreach ($binaryChoice as $yn) {
                     // test if any binary options are in POST array
                     if ($_POST[$yn] != "") {
-                        echo $_POST[$yn]; // print out binary option found
-                        print "<br>";
-
                         if ($_POST[$yn] == "Boats Allowed") {
                             // filter out all locations that don't have boating access
                             $boatsArray = array_merge(filter_attr($data, "AccessType", "Boating"),
@@ -288,9 +289,9 @@ $parkingValue  = "";
                 }
                 ?>
 
-            </p>
+
             <div id="jsMap" style="width: 100%; height: 800px;"></div>
-            <script type="text/javascript" src="<?php print $rootFolder; ?>/_lib/vermont-geojson.js"></script>
+            <script type="text/javascript" src="<?= $rootFolder; ?>/_lib/vermont-geojson.js"></script>
             <script type="text/javascript">
                 // imported script vermont-geojson.js provides GeoJSON data for the state of Vermont and its counties, stored in
                 // variables 'vermontBorder' and 'vermontCounties'
@@ -320,7 +321,7 @@ $parkingValue  = "";
 
                 // create current location marker (if applicable)
                 <?php if (!$hasUserLocationData) print "/*" . PHP_EOL; // if there isn't user location data, comment out the current location marker ?>
-                var yourMarker = new L.marker([<?php if ($hasUserLocationData) print $userLat; ?>, <?php if ($hasUserLocationData) print $userLon; ?>], {icon: currentLocationIcon})
+                var yourMarker = new L.marker([<?= $userLat ?? 0; ?>, <?= $userLon ?? 0; ?>], {icon: currentLocationIcon})
                     .bindPopup("<strong>Your current location</strong>")
                     .addTo(mymap);
                 markers.push(yourMarker);
@@ -351,11 +352,11 @@ $parkingValue  = "";
                                 $fishAtSite[] = fromCamelCase($attr);
                         }
 
-                        $boatSize     = ($location['attributes']['BoatSize'] != null) ? $location['attributes']['BoatSize'] : "N/A";
+                        $boatSize     = $location['attributes']['BoatSize'] ?? "N/A";
                         $accessType   = $location['attributes']['AccessType'];
                         $parking      = $location['attributes']['Parking'];
                         $shoreFishing = $location['attributes']['Shorefishing'];
-                        $popularity   = ($location['attributes']['UseVolume'] != null) ? $location['attributes']['UseVolume'] : "N/A";
+                        $popularity   = $location['attributes']['UseVolume'] ?? "N/A";
 
                         // assemble popup html text
                         $popupHtml = "\""
@@ -366,7 +367,7 @@ $parkingValue  = "";
                             . "<br><hr>"
                             . "<span class='uline'>Fish Present</span><br>" . join(", ", $fishAtSite)
                             . "<hr>"
-                            . "<ul>"
+                            . "<ul class='popupUl'>"
                             . "<li class='popupLi'>Activities: $accessType</li>"
                             . "<li class='popupLi'>Max boat size: $boatSize</li>"
                             . "<li class='popupLi'>Parking capacity: $parking</li>"
@@ -379,8 +380,7 @@ $parkingValue  = "";
 
                         $lat = $location['geometry']['y'];
                         $lon = $location['geometry']['x']; ?>
-
-                markers.push(new L.marker(<?php print "[$lat, $lon]"; ?>).bindPopup(<?php print $popupHtml; ?>, {minWidth:225, maxWidth: 350}));
+                markers.push(new L.marker(<?= "[$lat, $lon]" ?>).bindPopup(<?= $popupHtml ?>, {minWidth:225, maxWidth: 350}));
             <?php   }
                 } ?>
 
@@ -413,24 +413,27 @@ $parkingValue  = "";
                         break;
                     }
                     // only adds county layers to map if there are valid fishing locations
-                    <?php if (!empty($locations)) print "layer.addTo(mymap);"; ?>
+                    <?php if (!empty($locations)): ?>
+                    layer.addTo(mymap);
+                    <?php endif; ?>
                 });
 
                 // add state border to map (style changes depending on whether or not the search returned any results.
                 L.geoJSON(vermontBorder)
                     .setStyle({
-                        fillColor   : '<?php !empty($locations) ? print '#ffffff' : print "#c21a20"; ?>',
-                        fillOpacity : '<?php !empty($locations) ? print 0         : print 0.45;      ?>',
-                        color       : '<?php !empty($locations) ? print '#3388ff' : print "#c21a20"; ?>',
+                        fillColor   : '<?= !empty($locations) ? '#ffffff' : "#c21a20"; ?>',
+                        fillOpacity : '<?= !empty($locations) ? 0         : 0.45;      ?>',
+                        color       : '<?= !empty($locations) ? '#3388ff' : "#c21a20"; ?>',
                         opacity     : 1,
                         weight      : 3
                     })
                     .addTo(mymap)
-                <?php // bind & open warning popup if no valid locations found with current filter criteria
-                if (empty($locations)) print '.bindPopup("No valid locations were found.<br>Please try again with less restrictive filter criteria.").openPopup()';
-                ?>;
+                <?php if (empty($locations)): // bind & open warning popup if no valid locations found with current filter criteria ?>
+                    .bindPopup("No valid locations were found.<br>Please try again with less restrictive filter criteria.")
+                    .openPopup();
+                <?php endif; ?>
             </script>
-            <?php if (!isset($_POST["btnSubmit"])) print "-->"; // end conditional map display ?>
+            <?= isset($_POST["btnSubmit"]) ? '' : "-->"; // end conditional map display ?>
         </div>
 
         <br>

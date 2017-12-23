@@ -202,12 +202,12 @@ button {
     font-size   : 1.3em;
 }
 
-ul {
+/* leaflet.js map popups */
+
+.popupUl {
     padding: 0;
     list-style-type: none;
 }
-
-/* leaflet.js map popups */
 
 .popupLi {
     display: inline-block;
